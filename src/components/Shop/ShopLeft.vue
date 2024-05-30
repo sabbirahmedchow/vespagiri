@@ -9,7 +9,7 @@
                 <div class="widget_categories">
                    <ul>
                         <li v-for="category in categories_list" >
-                            <router-link to="/shop" @click="sendCategoryId(category._doc._id)">{{ category._doc.name}}<span class="caet_count"> ({{ category.numProdInCat }})</span></router-link>
+                            <router-link to="/shop" @click="sendCategoryId(category._doc._id, category._doc.name)">{{ category._doc.name}}<span class="caet_count"> ({{ category.numProdInCat }})</span></router-link>
                         </li>
                     </ul>
                 </div>
@@ -23,7 +23,7 @@
                 <ul>
                         
                     <li v-for="brand in brand_list" >
-                        <router-link to="/shop" @click="sendBrandId(brand._doc._id)">{{ brand._doc.name}}</router-link>
+                        <router-link to="/shop" @click="sendBrandId(brand._doc._id, brand._doc.name)">{{ brand._doc.name}}</router-link>
                     </li>
                 </ul>
                 </div>
@@ -69,12 +69,12 @@
         .catch((err) => console.log(err));
     };
 
-    const sendCategoryId = (cat_id) => {
-        e.emit('category-id', {'category_id': cat_id})
+    const sendCategoryId = (cat_id, cat_name) => {
+        e.emit('category-id', {'category_id': cat_id, 'category_name': cat_name})
     };
 
-    const sendBrandId = (brand_id) => {
-        e.emit('brand-id', {'brand_id': brand_id})
+    const sendBrandId = (brand_id, brand_name) => {
+        e.emit('brand-id', {'brand_id': brand_id, 'brand_name': brand_name})
     };
 
     const sendPriceRange = () =>{

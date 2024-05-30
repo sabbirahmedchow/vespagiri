@@ -5,9 +5,14 @@
             <div class="col-12">
                 <div class="tab-content">
                     <div class="tab-pane active show fade" id="grid_view" role="tabpanel">
-                        <div id="loadProd"></div> 
-                        <div class="row">
+                        <div v-if="cat_name"><h3><b>Vespa {{cat_name}}</b></h3></div>
+                        <div v-else-if="brand_name"><h3><b>{{brand_name}}</b></h3></div>    
+                        <div v-else><h3><b>All Products</b></h3></div>   
+                        <br/>
 
+                        <div v-if="displayedComments.length">
+                        <div class="row">
+                        
                             <div class="col-lg-4 col-md-6 col-12" v-for="product in displayedComments">
                                 <div class="single__product">
                                     <span class="pro_badge" v-if="product.is_sale">Sale</span>
@@ -23,7 +28,7 @@
                                         <div class="product__desc">
                                             <h3><a href="product-details.html">{{product.name}}</a></h3>
                                             <div class="price_amount">
-                                                <span class="current_price">&#2547; {{parseFloat(product.price).toFixed(2)}} </span>
+                                                <span class="current_price">&#2547; {{parseFloat(product.price).toFixed(2)}} </span>&nbsp;
                                                 <span class="discount_price" v-if="product.sale_percentage != null">-{{product.sale_percentage}}%</span>
                                                
                                             </div>
@@ -31,30 +36,33 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                        </div>
+                        </div>
+                        <div v-else>
+                            <p><h4>No Product Found.</h4></p>
+                        </div>
                         </div>
                     </div>
                     
                 </div>
             </div>
-        </div>
-        
+       
         
         <div class="row pagination_box mt-70">
             <div class="col-12 paginate-position">
                 
-        <vue-awesome-paginate
-        :total-items="products.length"
-        :items-per-page="perPage"
-        :max-pages-shown="5"
-        paginate-buttons-class="btn"
-        active-page-class="btn-active"
-        back-button-class="back-btn"
-        next-button-class="next-btn"
-        v-model="currentPage"
-        prev-button-content="Prev"
-        next-button-content="Next"
-      />
+                <vue-awesome-paginate
+                :total-items="products.length"
+                :items-per-page="perPage"
+                :max-pages-shown="5"
+                paginate-buttons-class="btn"
+                active-page-class="btn-active"
+                back-button-class="back-btn"
+                next-button-class="next-btn"
+                v-model="currentPage"
+                prev-button-content="Prev"
+                next-button-content="Next"
+            />
                
             </div>
         </div> 
@@ -78,6 +86,7 @@
   }
   .btn:hover {
     background-color: #F6563C;
+    color: #ffffff;
   }
   .back-btn {
     width: 80px;
@@ -85,6 +94,7 @@
   }
   .back-btn:hover {
     background-color: #F6563C;
+    color: #ffffff;
   }
   .next-btn {
     width: 80px;
@@ -92,17 +102,21 @@
   }
   .next-btn:hover {
     background-color: #F6563C;
+    color: #ffffff;
   }
   .btn-active {
     background-color: #F6563C;
     color: white;
   }
 </style>
+
 <script setup>
 import { ref, computed, onMounted, inject } from 'vue';
 import axios from "axios";
  
 const e = inject('emitter');
+let cat_name;
+let brand_name;
 
 const perPage = ref(6);
 const currentPage = ref(1);
@@ -110,24 +124,24 @@ const products = ref([]);
 
 e.on('category-id', (evt) => {
     let cat_id = evt.category_id;
-    getProducts(cat_id)
+    cat_name = evt.category_name;
+    brand_name = '';// make the brand title empty for category name to be shown.
+    getProducts(cat_id,'','')
 })
 
 e.on('brand-id', (evt) => {
     let brand_id = evt.brand_id;
+    brand_name = evt.brand_name;
+    cat_name = ''; // make the category name empty for the brand name to be shown.
     getProducts('',brand_id,'')
 })
 
 e.on('price-range', (evt) => {
     let price_range = evt.price_range;
     price_range = price_range.split(",");
+    brand_name = cat_name = '';
     getProducts('','',price_range)
 })
-
-const onClickHandler = (page) => {
-  console.log(page);
-};
-
 
 
 const getProducts = async (cat_id = '', brand_id = '', price_range='') => {
@@ -178,6 +192,7 @@ const getProducts = async (cat_id = '', brand_id = '', price_range='') => {
    
 };
 
+//this computed property is to manage the pagination.
 const displayedComments = computed(() => {
   const startIndex = (currentPage.value * perPage.value) - perPage.value;
   const endIndex = startIndex + perPage.value;

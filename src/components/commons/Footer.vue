@@ -13,7 +13,7 @@
                                         </div>
                                         <div class="h_ser_text">
                                             <h3>Fast Delivery</h3>
-                                            <p>All around bangladesh</p>
+                                            <p>All over bangladesh</p>
                                         </div>
                                     </div>
                                 </div>

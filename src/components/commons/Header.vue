@@ -4,7 +4,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3">
                         <div class="logo">
-                            <a href="index.html"><img src="/img/logo/vespa-logo.png" alt="Vespagiri" height="100"></a>
+                            <router-link to="/" onclick="test()"><img src="/img/logo/vespa-logo.png" alt="Vespagiri" height="100"></router-link>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-8">
