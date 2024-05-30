@@ -1,0 +1,38 @@
+{
+  "name": "vespagiri",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "dev": "vite",
+    "api": "nodemon api/index.js",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "jquery": "^3.7.1",
+    "jsonwebtoken": "^9.0.2",
+    "mitt": "^3.0.1",
+    "mongoose": "^8.2.3",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "nodemon": "^3.1.0",
+    "process": "^0.11.10",
+    "vue": "^3.4.15",
+    "vue-awesome-paginate": "^1.1.46",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-inject": "^5.0.5",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "vite": "^5.0.11"
+  }
+}
