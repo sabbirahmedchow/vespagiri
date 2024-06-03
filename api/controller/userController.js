@@ -6,36 +6,23 @@ require("dotenv").config();
 const saltRounds = 10;
 
 module.exports.userRegister = (req, res) => {
+  try{
   
   bcrypt.hash(req.body.password, saltRounds, function(err, hash) {  
   const newUser = new user({
-    fullname: req.body.name,
-    mobile: req.body.number,
+    fullname: req.body.full_name,
+    mobile: req.body.mobile,
+    username: req.body.username,
     email: req.body.email,
     password: hash,
   });
-   newUser.save((err, saveduser) => {
-    if (err)
-    {
-      return res.send({
-        msgError: "This email address is already exist.",
-      });
-    }
-    else
-    {
-      const userInfo = { user: saveduser._id };
-      //JWT token fetch
-      const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" });
-      //JWT refresh token fetch
-      const refreshToken = jwt.sign(userInfo, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "1y" });
-      return res.status(200).json({
-        accessToken,
-        refreshToken,
-        msgSuccess: "You are now registered and logged in.",
-      });
-    }
-  });
-});
+  newUser.save();
+  res.send("Please check your email to complete the registration.") 
+})
+   
+}catch(err){
+  res.send("An error occurred. " + err.message);
+}
 };
 
 module.exports.userAccount = (req, res) =>{

@@ -21,7 +21,7 @@
                                     </div>
                                     <div class="product_hover">
                                         <div class="product_action">
-                                            <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                            <a href="#" title="Add To Cart" @click="addToCart(product)"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
                                             <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
                                             
                                         </div>
@@ -113,6 +113,9 @@
 <script setup>
 import { ref, computed, onMounted, inject } from 'vue';
 import axios from "axios";
+import { cartStore } from '@/store/cart.js'
+
+const cartObj = cartStore();
  
 const e = inject('emitter');
 let cat_name;
@@ -198,6 +201,23 @@ const displayedComments = computed(() => {
   const endIndex = startIndex + perPage.value;
   return products.value.slice(startIndex, endIndex);
 });
+
+const addToCart = (product) =>{
+
+   //if(cartObj.) 
+   
+   let cartProduct = {
+    "product_id": product._id,
+    "product_name": product.name,
+    "product_price": product.price,
+    "product_quantity": 1
+   };
+   console.log(cartObj.productQuantity(product._id));
+    cartObj.cart.push(cartProduct);
+    console.log(cartObj.cart);
+    
+}
+
 onMounted(() => {
     getProducts();
     

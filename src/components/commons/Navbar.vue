@@ -11,16 +11,20 @@
                                 <li><router-link to="/shop" onclick="test()">Shop</router-link></li>
                                 <li><router-link to="/news">News</router-link></li>
                                 <li><router-link to="/contact">CONTACT </router-link></li>
-                                <li class="mega_item"><a href="#">My Account</a></li>
+                                <li class="mega_item" v-if="isCookieSet"><a href="#">My Account</a></li>
                             </ul>
                         </nav>
                     </div>
                 </div>
                 <div class="col-lg-4 col-12">
                     <div class="header_right_info">
-                        <ul>
-                            <li><a href="wishlist.html">Register</a></li>
-                            <li> <a href="login.html">Login</a></li>							                    
+                        <ul v-if="!isCookieSet">
+                            <li><router-link to="/register">Register</router-link></li>
+                            <li> <router-link to="/login">Login</router-link></li>							                    
+                        </ul>
+                        <ul v-else>
+                            <li>Welcome, {{ user_fullname }} </li>
+                            <li> <router-link to="/logout">Logouy</router-link></li>							                    
                         </ul>
                     </div>
                 </div>
@@ -46,3 +50,17 @@
         </div>
     </div>
 </template>    
+<script setup>
+import { ref, onMounted } from 'vue';
+
+let isCookieSet = ref(false);
+let user_fullname = ref('');
+
+onMounted(() => {
+    if (document.cookie.indexOf('access_token_user') > -1  ) {
+        isCookieSet.value = true;
+        user_fullname.value = document.cookie.split('user_fullname=')[1].split(';')[0];
+    }
+    
+});
+</script>

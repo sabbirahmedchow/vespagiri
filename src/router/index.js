@@ -9,6 +9,8 @@ import Checkout from '../views/Checkout.vue'
 import News from '../views/News.vue'
 import NewsDetail from '../views/NewsDetail.vue'
 import Contact from '../views/Contact.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 const routes = [
   {
@@ -63,6 +65,18 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact
+  },
+
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
   }
 ]
 const router = createRouter({

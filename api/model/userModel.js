@@ -17,6 +17,10 @@ var userSchema = new Schema({
     type: String,
     default: "user"
   },
+  is_active: {
+    type:Boolean,
+    default: 0
+  },
   avatar: String
   
 });
