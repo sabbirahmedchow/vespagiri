@@ -15,29 +15,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img src="/img/product/pro_sm_1.png" alt="" /></a></td>
-                                <td class="pro-title"><a href="#">Le Parc Minotti Chair</a></td>
-                                <td class="pro-price"><span class="amount">$169.00</span></td>
-                                <td class="pro-quantity"><div class="product-quantity"><input type="number" value="1" /></div></td>
-                                <td class="pro-subtotal">$169.00</td>
-                                <td class="pro-remove"><a href="#">×</a></td>
+                            <tr v-if="cartObj.cart.length > 0" v-for="cartProduct in cartObj.cart">
+                                <td class="pro-thumbnail"><img :src="'/img/product/product_small/' + cartProduct.product_image" :alt=cartProduct.product_name></td>
+                                <td class="pro-title"><a href="#">{{ cartProduct.product_name }}</a></td>
+                                <td class="pro-price"><span class="amount">&#2547; {{ parseFloat(cartProduct.product_price).toFixed(2) }}</span></td>
+                                <td class="pro-quantity"><div class="product-quantity"><input type="number" min="1" v-model.quantity = cartProduct.product_quantity /></div></td>
+                                <td class="pro-subtotal">&#2547; {{ cartObj.getProductPriceByQuantity(cartProduct.product_id) }}</td>
+                                <td class="pro-remove"><a href="#" @click="cartObj.deleteProductFromCart(cartProduct.product_id)">×</a></td>
                             </tr>
-                            <tr>
-                                <td class="pro-thumbnail"><a href="#"><img src="/img/product/pro_sm_2.png" alt="" /></a></td>
-                                <td class="pro-title"><a href="#">DSR Eiffel chair</a></td>
-                                <td class="pro-price"><span class="amount">$137.00</span></td>
-                                <td class="pro-quantity"><div class="product-quantity"><input type="number" value="1" /></div></td>
-                                <td class="pro-subtotal">$137.00</td>
-                                <td class="pro-remove"><a href="#">×</a></td>
+                            <tr v-else>
+                                <td colspan="6"><p><b>No products in your cart.</b></p></td>
                             </tr>
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="cart-buttons mb-30">
-                    <input type="submit" value="Update Cart" />
+                    
                     <a href="#">Continue Shopping</a>
                 </div>
                 <div class="cart-coupon mb-40">
@@ -57,12 +53,12 @@
                             <tbody>
                                 <tr class="cart-subtotal">
                                     <th>Subtotal</th>
-                                    <td><span class="amount">$306.00</span></td>
+                                    <td><span class="amount">&#2547; {{ cartObj.calculateTotalInCart() }}</span></td>
                                 </tr>
                                 <tr class="order-total">
                                     <th>Total</th>
                                     <td>
-                                        <strong><span class="amount">$306.00</span></strong>
+                                        <strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart() }}</span></strong>
                                     </td>
                                 </tr>											
                             </tbody>
@@ -79,3 +75,10 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { cartStore } from '@/store/cart.js'
+
+const cartObj = cartStore();
+
+</script>

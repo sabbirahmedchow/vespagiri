@@ -10,10 +10,10 @@
                         <div v-else><h3><b>All Products</b></h3></div>   
                         <br/>
 
-                        <div v-if="displayedComments.length">
+                        <div v-if="showPages.length">
                         <div class="row">
                         
-                            <div class="col-lg-4 col-md-6 col-12" v-for="product in displayedComments">
+                            <div class="col-lg-4 col-md-6 col-12" v-for="product in showPages">
                                 <div class="single__product">
                                     <span class="pro_badge" v-if="product.is_sale">Sale</span>
                                     <div class="produc_thumb">
@@ -196,26 +196,24 @@ const getProducts = async (cat_id = '', brand_id = '', price_range='') => {
 };
 
 //this computed property is to manage the pagination.
-const displayedComments = computed(() => {
+const showPages = computed(() => {
   const startIndex = (currentPage.value * perPage.value) - perPage.value;
   const endIndex = startIndex + perPage.value;
   return products.value.slice(startIndex, endIndex);
 });
 
-const addToCart = (product) =>{
-
-   //if(cartObj.) 
-   
-   let cartProduct = {
-    "product_id": product._id,
-    "product_name": product.name,
-    "product_price": product.price,
-    "product_quantity": 1
-   };
-   console.log(cartObj.productQuantity(product._id));
+ const addToCart = (product) =>{
+   if(cartObj.checkProductExists(product._id))
+   {
+    let cartProduct = {
+        product_id : product._id,
+        product_name : product.name,
+        product_price : product.price,
+        product_image : product.image_small,
+        product_quantity : 1
+    };
     cartObj.cart.push(cartProduct);
-    console.log(cartObj.cart);
-    
+   }
 }
 
 onMounted(() => {

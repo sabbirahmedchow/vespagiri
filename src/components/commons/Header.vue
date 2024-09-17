@@ -34,34 +34,24 @@
                         <div class="mini_cart_box_wrapper text-right">
                             <a href="#">
                                 <img src="/img/icon/cart.png" alt="Mini Cart Icon">
-                                <span class="cart_count">02</span>
+                                <span class="cart_count">{{cartObj.cartTotalQuantity()}}</span>
                             </a>
                             <ul class="mini_cart_box">
-                                <li class="single_product_cart">
+                                <li class="single_product_cart" v-if="cartObj.cart.length > 0" v-for="cartProduct in cartObj.cart">
                                     <div class="cart_img">
-                                        <a href="product-details.html"><img src="/img/product/pro_sm_1.png" alt=""></a>
+                                        <a href="product-details.html"><img :src="'/img/product/product_small/' + cartProduct.product_image" :alt=cartProduct.product_name></a>
                                     </div>
                                     <div class="cart_title">
-                                        <h5><a href="product-details.html"> Soffer Pro x33</a></h5>
+                                        <h5><a href="product-details.html"> {{cartProduct.product_name}}</a></h5>
                                         <h6><a href="#">Black</a></h6>
-                                        <span>$95.00 x 1</span>
+                                        <span>&#2547; {{ cartProduct.product_price }} x {{ cartProduct.product_quantity }}</span>
                                     </div>
                                     <div class="cart_delete">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
+                                        <a href="#" @click="cartObj.deleteProductFromCart(cartProduct.product_id)"><i class="zmdi zmdi-delete"></i></a>
                                     </div>
                                 </li>
-                                <li class="single_product_cart">
-                                    <div class="cart_img">
-                                        <a href="product-details.html"><img src="/img/product/pro_sm_2.png" alt=""></a>
-                                    </div>
-                                    <div class="cart_title">
-                                        <h5><a href="product-details.html"> Lotafaj una khdii</a></h5>
-                                        <h6><a href="#">Black</a></h6>
-                                        <span>$85.00 x 1</span>
-                                    </div>
-                                    <div class="cart_delete">
-                                        <a href="#"><i class="zmdi zmdi-delete"></i></a>
-                                    </div>
+                                <li class="single_product_cart" v-else>
+                                    <p><b>No products in your cart.</b></p>
                                 </li>
                                 
                                 <li class="cart_space">
@@ -69,7 +59,7 @@
                                         <h4>Subtotal</h4>
                                     </div>
                                     <div class="cart_price">
-                                        <h4>$180.00</h4>
+                                        <h4>&#2547; {{ cartObj.calculateTotalInCart()}}</h4>
                                     </div>
                                 </li>
                                 <li class="cart_btn_wrapper">
@@ -85,3 +75,9 @@
         
     
 </template>
+<script setup>
+import { cartStore } from '@/store/cart.js'
+
+const cartObj = cartStore();
+
+</script>

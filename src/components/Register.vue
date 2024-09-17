@@ -39,6 +39,10 @@
                             <input type="text" v-model="userData.mobile" required>
                         </div>
                         <div class="login_input">
+                            <label>Address <span>*</span></label>
+                            <input type="text" v-model="userData.address" required>
+                        </div>
+                        <div class="login_input">
                             <label>Email address <span>*</span></label>
                             <input type="email" v-model="userData.email" required>
                         </div>
@@ -150,6 +154,7 @@ let confirmLoginMsg = ref("");
 let userData = {
     full_name: "",
     mobile: "",
+    address: "",
     email: "",
     username: "",
     password: "",
@@ -192,6 +197,7 @@ async function submitRegisterForm(){
                 confirmRegistrationMsg.value = res.data; 
                 this.userData.full_name = '';
                 this.userData.mobile = '';
+                this.userData.address = '';
                 this.userData.email = ''; 
                 this.userData.username = '';
                 this.userData.password= '';
@@ -207,8 +213,16 @@ async function submitRegisterForm(){
 async function submitLoginForm(){
     return await axios.post('/api/userLogin', this.loginData)
     .then((res) =>{
-        confirmLoginMsg.value = res.data;
-        this.$router.push('Home')
+        if(res.data[1] == 0)
+        {
+            confirmLoginMsg.value = res.data[0];
+            return false;
+        }
+        else{
+            confirmLoginMsg.value = res.data[0];
+            location.href= window.location.origin;
+        }
+        
     })
     .catch((err) => console.log(err));
 }

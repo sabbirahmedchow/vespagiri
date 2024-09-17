@@ -23,8 +23,8 @@
                             <li> <router-link to="/login">Login</router-link></li>							                    
                         </ul>
                         <ul v-else>
-                            <li>Welcome, {{ user_fullname }} </li>
-                            <li> <router-link to="/logout">Logouy</router-link></li>							                    
+                            <li><router-link to="#">Welcome, {{user_fullname}}</router-link> </li>
+                            <li> <router-link to="#" @click="logout()">Logout</router-link></li>							                    
                         </ul>
                     </div>
                 </div>
@@ -52,14 +52,24 @@
 </template>    
 <script setup>
 import { ref, onMounted } from 'vue';
+import axios from "axios";
 
 let isCookieSet = ref(false);
 let user_fullname = ref('');
 
+async function logout(){
+    return await axios.post('/api/logout')
+    .then((res) =>{
+        alert(res.data);
+        location.href= window.location.origin;
+    })
+    .catch((err) => console.log(err));
+}
+
 onMounted(() => {
-    if (document.cookie.indexOf('access_token_user') > -1  ) {
+    if (document.cookie.indexOf('user_fullname') > -1  ) {
         isCookieSet.value = true;
-        user_fullname.value = document.cookie.split('user_fullname=')[1].split(';')[0];
+        user_fullname.value = document.cookie.split('user_fullname=')[1].split(';')[0].replace(/%20/g, " ");
     }
     
 });

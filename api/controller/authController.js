@@ -6,8 +6,8 @@ require("dotenv").config();
 module.exports.login = async(req, res) => {
   try{
     userRes = await User.findOne({ username: req.body.username });
-    if (userRes.username == null) {
-      res.send("This account does not exist.");
+    if (userRes == null) {
+      res.send(["This account does not exist.", 0]);
     } else {
       bcrypt.compare(req.body.password, userRes.password, function(
         err,
@@ -20,19 +20,21 @@ module.exports.login = async(req, res) => {
           const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET);
           
           // set a cookie for access token with options
-          res.cookie("access_token_user", accessToken, {
+          res.cookie("accessTokenUser", accessToken, {
             httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
+            maxAge: 24 * 60 * 60 * 1000
           });
+          res.cookie("user_fullname", userRes.fullname);
+          res.send(["Successfully Logged In. Redirecting...", 1]);
          
         } else {
-          res.send("Wrong password. Please try again.");
+          res.send(["Wrong password. Please try again.", 0]);
         }
       });
     }
   
 }catch(e){
-  res.send(e.message);
+  res.send(["Error: "+ e.message, 0]);
 }
 };
 
@@ -53,11 +55,6 @@ module.exports.authenticateToken = (req, res, next) => {
       {
         //console.log("user: "+ user.user);
         req.user = user.user;
-        const userInfo = User.findOne({_id: req.user});
-        res.cookie("user_fullname", userInfo.full_name, {
-          httpOnly: true,
-          maxAge: 24 * 60 * 60 * 1000,
-        });
         next();
       }
     });
@@ -69,4 +66,13 @@ module.exports.authenticateToken = (req, res, next) => {
   }
 }
 
+module.exports.logout = (req, res) => {
+  res.cookie("accessTokenUser", '', {maxAge: 0}); // for httpOnly cookie
+  //for regular cookie
+  let cks = req.cookies;
+  for(ck in cks){
+  res.clearCookie(ck)
+  }
+  res.send("Successfully logged out.");
+}
 

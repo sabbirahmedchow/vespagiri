@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'  
 import mitt from 'mitt'
+import piniaPluginPersistedState from "pinia-plugin-persistedstate"
 
 const emitter = mitt();
 
@@ -12,6 +13,7 @@ import "vue-awesome-paginate/dist/style.css";
 
 const app = createApp(App);
 const pinia = createPinia();
+pinia.use(piniaPluginPersistedState)
 
 //For gloabl use
 app.provide('emitter', emitter);

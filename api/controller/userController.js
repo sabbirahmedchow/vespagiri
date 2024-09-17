@@ -5,13 +5,27 @@ require("dotenv").config();
 
 const saltRounds = 10;
 
-module.exports.userRegister = (req, res) => {
+module.exports.userRegister = async(req, res) => {
   try{
-  
+  userByName = await user.findOne({ username: req.body.username});
+  userByEmail = await user.findOne({ email: req.body.email});
+  //console.log(userRes);
+  if(userByName != null && userByName.username == req.body.username)
+    {
+      res.send("This username is already exists");  
+      return false;
+    }
+  else if(userByEmail != null && userByEmail.email == req.body.email)  
+    {
+      res.send("This email address is already exists");  
+      return false;
+    } 
+  else{  
   bcrypt.hash(req.body.password, saltRounds, function(err, hash) {  
   const newUser = new user({
     fullname: req.body.full_name,
     mobile: req.body.mobile,
+    address: req.body.address,
     username: req.body.username,
     email: req.body.email,
     password: hash,
@@ -19,7 +33,7 @@ module.exports.userRegister = (req, res) => {
   newUser.save();
   res.send("Please check your email to complete the registration.") 
 })
-   
+}   
 }catch(err){
   res.send("An error occurred. " + err.message);
 }
