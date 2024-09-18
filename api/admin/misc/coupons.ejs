@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/header') %>
+<body class="animsition">
+    <div class="page-wrapper">
+        
+    <%- include('../partials/nav') %> 
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
+            <br/>
+
+            <!-- Misc-->
+            <section class="welcome p-t-10">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="title-4">Coupons</h1>
+                            
+                            <hr class="line-seprate">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Misc end-->
+            
+            
+
+           
+            <!-- DATA TABLE-->
+            <section class="p-t-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-data__tool"> 
+                                <div class="table-data__tool-left"></div> 
+                                <div class="table-data__tool-right">
+                                    <a href="/category"><button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        coupon list</button></a>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <form hx-post="/submitCoupon" hx-on::after-request="this.reset()" id="categoryFrm" hx-target="#confrim" method="post" class="form-horizontal">  
+                                <div class="card-header">
+                                    <strong>Create Coupon</strong>
+                                </div>
+                                <div id="confrim"></div>
+                                <div class="card-body card-block">
+                                    
+                                        <div class="row form-group">
+                                           <div class="form-inline">   
+                                            <div class="form-group mb-2">
+                                                <label for="staticEmail2" >Coupon</label>
+                                                
+                                            </div>
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <label for="inputPassword2" class="sr-only">Password</label>
+                                                <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
+                                        </div>
+                                        <div class="form-inline">
+                                            <div class="form-group mb-2">
+                                                <label for="hf-percent" class=" form-control-label">Coupon Off</label>
+                                            </div>
+
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <input type="text" id="hf-percent" name="coupon_percent" />
+                                            </div>
+                                        </div>   
+                                            <div class="col col-md-3">
+                                                <label for="hf-expired" class=" form-control-label">Coupon Expired On</label>
+                                            </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type="text" id="hf-expired" name="coupon_percent" />
+                                            </div>
+
+                                        </div>
+                                        
+                                    
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-success btn-sm" >
+                                        Save
+                                    </button>
+                                    <button type="reset" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-ban"></i> Reset
+                                    </button>
+                                </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END DATA TABLE-->
+
+            <%- include('../partials/footer') %>
+
+</body>
+
+</html>
+<!-- end document-->

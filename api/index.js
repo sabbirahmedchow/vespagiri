@@ -16,6 +16,7 @@ const brandRoute = require("./routes/brandRoute");
 //declare admin routes
 const adminCatRoute = require("./routes/adminRoute/categoryRoute");
 const adminBrandRoute = require("./routes/adminRoute/brandRoute");
+const adminCouponRoute = require("./routes/adminRoute/couponRoute");
 const adminProductRoute = require("./routes/adminRoute/productRoute");
 const orderRoute = require("./routes/adminRoute/orderRoute");
 const userListRoute = require("./routes/adminRoute/adminRoute");
@@ -66,6 +67,7 @@ app.use(brandRoute);
 //admin routes
 app.use(adminCatRoute);
 app.use(adminBrandRoute);
+app.use(adminCouponRoute);
 app.use(adminProductRoute);
 app.use(orderRoute);
 app.use(userListRoute);
