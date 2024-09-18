@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="card">
-                                <form hx-post="/submitCoupon" hx-on::after-request="this.reset()" id="categoryFrm" hx-target="#confrim" method="post" class="form-horizontal">  
+                                <form hx-post="/submitCoupon" hx-on::after-request="this.reset()" id="couponFrm" hx-target="#confrim" method="post" class="form-horizontal">  
                                 <div class="card-header">
                                     <strong>Create Coupon</strong>
                                 </div>
@@ -50,33 +50,48 @@
                                 <div class="card-body card-block">
                                     
                                         <div class="row form-group">
-                                           <div class="form-inline">   
-                                            <div class="form-group mb-2">
-                                                <label for="staticEmail2" >Coupon</label>
-                                                
-                                            </div>
-                                            <div class="form-group mx-sm-3 mb-2">
-                                                <label for="inputPassword2" class="sr-only">Password</label>
-                                                <input type="password" class="form-control" id="inputPassword2" placeholder="Password">
-                                            </div>
-                                            <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
-                                        </div>
-                                        <div class="form-inline">
-                                            <div class="form-group mb-2">
-                                                <label for="hf-percent" class=" form-control-label">Coupon Off</label>
-                                            </div>
-
-                                            <div class="form-group mx-sm-3 mb-2">
-                                                <input type="text" id="hf-percent" name="coupon_percent" />
-                                            </div>
+                                             
+                                                <div class="col col-md-3">
+                                                    <label for="staticEmail2" >Coupon</label>
+                                                </div>
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <div class="input-group"> 
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">VG -</div>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="code" required />
+                                                    </div>
+                                                </div>    
+                                                <button type="button" class="btn btn-info btn-sm mb-2" onclick="getCoupon()">Generate Coupon</button>
+                                            
                                         </div>   
-                                            <div class="col col-md-3">
-                                                <label for="hf-expired" class=" form-control-label">Coupon Expired On</label>
-                                            </div>
-                                            <div class="col-12 col-md-9">
-                                                <input type="text" id="hf-expired" name="coupon_percent" />
-                                            </div>
+                                        <div class="row form-group"> 
 
+                                                <div class="col col-md-3">
+                                                    <label for="hf-percent" class="form-control-label">Coupon Off</label>
+                                                </div>
+
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <div class="input-group"> 
+                                                        <input type="text" class="form-control" required name="coupon_percent"/>
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">%</div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                              
+                                        </div>    
+                                        <div class="row form-group">
+                                              
+                                                <div class="col col-md-3">
+                                                    <label class=" form-control-label">Coupon Expired On</label>
+                                                </div>
+
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <input type="text" id="input" class="form-control" name="coupon_percent" />
+                                                </div>
+                                                
                                         </div>
                                         
                                     
@@ -99,6 +114,25 @@
             <!-- END DATA TABLE-->
 
             <%- include('../partials/footer') %>
+            <script>
+               function getCoupon(){
+                $.ajax({
+
+                    url : '/getCouponCode',
+                    type : 'POST',
+                    data : JSON.stringify({ length : 6}),
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    success : function(data) {              
+                        $('#code').val(data.code);
+                    },
+                    error : function(request,error)
+                    {
+                        alert("Request: "+JSON.stringify(request));
+                    }
+                    });
+               } 
+            </script>
 
 </body>
 

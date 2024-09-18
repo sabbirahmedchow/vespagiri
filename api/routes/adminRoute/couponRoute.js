@@ -5,5 +5,6 @@ const { authenticateToken } = require("../../controller/adminController/authCont
 const route = Router();
 
 route.get("/coupon", authenticateToken, couponController.couponForm);
+route.post("/getCouponCode", authenticateToken, couponController.getCouponCode);
 
 module.exports = route;
