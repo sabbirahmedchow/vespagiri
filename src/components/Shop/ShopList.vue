@@ -10,10 +10,10 @@
                         <div v-else><h3><b>All Products</b></h3></div>   
                         <br/>
 
-                        <div v-if="showPages.length">
+                        <div v-if="ShowProducts.length">
                         <div class="row">
                         
-                            <div class="col-lg-4 col-md-6 col-12" v-for="product in showPages">
+                            <div class="col-lg-4 col-md-6 col-12" v-for="product in ShowProducts">
                                 <div class="single__product">
                                     <span class="pro_badge" v-if="product.is_sale">Sale</span>
                                     <div class="produc_thumb">
@@ -196,7 +196,7 @@ const getProducts = async (cat_id = '', brand_id = '', price_range='') => {
 };
 
 //this computed property is to manage the pagination.
-const showPages = computed(() => {
+const ShowProducts = computed(() => {
   const startIndex = (currentPage.value * perPage.value) - perPage.value;
   const endIndex = startIndex + perPage.value;
   return products.value.slice(startIndex, endIndex);

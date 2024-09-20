@@ -6,5 +6,7 @@ const route = Router();
 
 route.get("/coupon", authenticateToken, couponController.couponForm);
 route.post("/getCouponCode", authenticateToken, couponController.getCouponCode);
+route.post("/submitCoupon", authenticateToken, couponController.saveCouponCode);
+route.get("/coupon-list", authenticateToken, couponController.getAllCoupon);
 
 module.exports = route;
