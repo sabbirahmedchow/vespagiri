@@ -42,3 +42,4 @@ module.exports.getAllCoupon = async(req, res) => {
         res.render('misc/coupon-list', {error: err.message, data: req.cookies});
     }
 };
+

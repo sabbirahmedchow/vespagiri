@@ -9,14 +9,8 @@
                             <div class="country-select">
                                 <label>Country <span class="required">*</span></label>
                                 <select>
-                                  <option value="volvo">bangladesh</option>
-                                  <option value="saab">Algeria</option>
-                                  <option value="mercedes">Afghanistan</option>
-                                  <option value="audi">Ghana</option>
-                                  <option value="audi2">Albania</option>
-                                  <option value="audi3">Bahrain</option>
-                                  <option value="audi4">Colombia</option>
-                                  <option value="audi5">Dominican Republic</option>
+                                  <option value="BD">Bangladesh</option>
+                                  
                                 </select> 										
                             </div>
                         </div>
@@ -50,14 +44,23 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="checkout-form-list">
-                                <label>Town / City <span class="required">*</span></label>
-                                <input type="text" />
+                            <div class="country-select">
+                                <label>Division / City <span class="required">*</span></label>
+                                <select>
+                                    <option value="Barishal">Barishal</option>
+                                    <option value="Chattogram">Chattogram</option>
+                                    <option value="Dhaka">Dhaka</option>
+                                    <option value="Khulna">Khulna</option>
+                                    <option value="Mymensingh">Mymensingh</option>
+                                    <option value="Rajshahi">Rajshahi</option>
+                                    <option value="Rangpur">Rangpur</option>
+                                    <option value="Sylhet">Sylhet</option>
+                                </select> 	
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="checkout-form-list">
-                                <label>State / County <span class="required">*</span></label>										
+                                <label>Phone <span class="required">*</span></label>										
                                 <input type="text" placeholder="" />
                             </div>
                         </div>
@@ -75,8 +78,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="checkout-form-list">
-                                <label>Phone  <span class="required">*</span></label>										
-                                <input type="text" />
+                                <label>Password  <span class="required">*</span></label>										
+                                <input type="password" />
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -103,14 +106,8 @@
                                 <div class="country-select">
                                     <label>Country <span class="required">*</span></label>
                                     <select>
-                                      <option value="volvo">bangladesh</option>
-                                      <option value="saab">Algeria</option>
-                                      <option value="mercedes">Afghanistan</option>
-                                      <option value="audi">Ghana</option>
-                                      <option value="audi2">Albania</option>
-                                      <option value="audi3">Bahrain</option>
-                                      <option value="audi4">Colombia</option>
-                                      <option value="audi5">Dominican Republic</option>
+                                      <option value="BD">Bangladesh</option>
+                                      
                                     </select> 										
                                 </div>
                             </div>
@@ -196,31 +193,28 @@
                             </tr>							
                         </thead>
                         <tbody>
-                            <tr class="cart_item">
+                            <tr class="cart_item" v-for="cartProduct in cartObj.cart">
                                 <td class="product-name">
-                                    Vestibulum suscipit <strong class="product-quantity"> × 1</strong>
+                                    {{ cartProduct.product_name }} <strong class="product-quantity"> × {{ cartProduct.product_quantity }}</strong>
                                 </td>
                                 <td class="product-total">
-                                    <span class="amount">£165.00</span>
+                                    <span class="amount">&#2547; {{ cartObj.getProductPriceByQuantity(cartProduct.product_id) }}</span>
                                 </td>
                             </tr>
-                            <tr class="cart_item">
-                                <td class="product-name">
-                                    Vestibulum dictum magna	<strong class="product-quantity"> × 1</strong>
-                                </td>
-                                <td class="product-total">
-                                    <span class="amount">£50.00</span>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                         <tfoot>
                             <tr class="cart-subtotal">
                                 <th>Cart Subtotal</th>
-                                <td><span class="amount">£215.00</span></td>
+                                <td><span class="amount">&#2547; {{ cartObj.calculateSubTotalInCart() }}</span></td>
+                            </tr>
+                            <tr class="cart-subtotal">
+                                <th>Discount</th>
+                                <td><span class="amount">&#2547; {{ cartObj.discount }}</span></td>
                             </tr>
                             <tr class="order-total">
                                 <th>Order Total</th>
-                                <td><strong><span class="amount">£215.00</span></strong>
+                                <td><strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart( cartObj.discount ) }}</span></strong>
                                 </td>
                             </tr>								
                         </tfoot>
@@ -269,3 +263,10 @@
         </div>
     </div>
 </template>    
+
+<script setup>
+import { cartStore } from '@/store/cart.js'
+
+const cartObj = cartStore();
+
+</script>

@@ -12,6 +12,7 @@ const authRoute = require("./routes/authRoutes");
 const productRoute = require("./routes/productRoutes");
 const catRoute = require("./routes/categoryRoute");
 const brandRoute = require("./routes/brandRoute");
+const couponRoute = require("./routes/couponRoute");
 
 //declare admin routes
 const adminCatRoute = require("./routes/adminRoute/categoryRoute");
@@ -63,6 +64,7 @@ app.use(userRoute);
 app.use(productRoute);
 app.use(catRoute);
 app.use(brandRoute);
+app.use(couponRoute);
 
 //admin routes
 app.use(adminCatRoute);

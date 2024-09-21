@@ -3,7 +3,9 @@ import { defineStore } from 'pinia'
 export const cartStore = defineStore('cart', {
     state: () =>{
         return {
-        cart: []
+        cart: [],
+        discount: 0.00,
+        coupon_percent: 0.00
         }
     },
 
@@ -23,7 +25,7 @@ export const cartStore = defineStore('cart', {
             return true;
         },
 
-        calculateTotalInCart(){
+        calculateSubTotalInCart(){
             let total_price = 0.00;
             let unit_price = 0.00;
             for(let i=0; i<this.cart.length; i++){
@@ -33,12 +35,28 @@ export const cartStore = defineStore('cart', {
             return parseFloat(total_price).toFixed(2);           
         },
 
+        applyCoupon(coupon){
+            this.coupon_percent = coupon;
+            this.discount = (coupon * this.calculateSubTotalInCart()) / 100;
+            this.calculateTotalInCart(this.discount);
+            return parseFloat(this.discount).toFixed(2);           
+        },
+
+        calculateTotalInCart(discounted_amount=0.00){
+            let final_amount = this.calculateSubTotalInCart() - discounted_amount;
+            return parseFloat(final_amount).toFixed(2);
+        },
+
+        
         deleteProductFromCart(id){
             if(confirm("Do you really want to delete?")){
                 if(this.cart.length > 0){
                     let getProduct = this.cart.find(({product_id}) => product_id === id);
                     if(getProduct){
                         this.cart.splice(this.cart.findIndex(a => a.product_id === getProduct.product_id) , 1)
+                    }
+                    if(this.cartTotalQuantity() == 0 && this.discount != 0.00){
+                        this.discount = 0.00;
                     }
                                 
                 }
@@ -57,7 +75,13 @@ export const cartStore = defineStore('cart', {
             return parseFloat(getProduct.product_price * this.cart[index].product_quantity).toFixed(2);
           }
           return 0.00;
-        }
+        },
+
+        reset() {
+            this.cart = [];
+            this.discount = 0.00;
+          }
+        
 
     },
 

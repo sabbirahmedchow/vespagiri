@@ -9,4 +9,5 @@ route.post("/getCouponCode", authenticateToken, couponController.getCouponCode);
 route.post("/submitCoupon", authenticateToken, couponController.saveCouponCode);
 route.get("/coupon-list", authenticateToken, couponController.getAllCoupon);
 
+
 module.exports = route;

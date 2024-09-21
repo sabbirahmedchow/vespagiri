@@ -34,15 +34,16 @@
             <div class="col-md-8 col-12">
                 <div class="cart-buttons mb-30">
                     
-                    <a href="#">Continue Shopping</a>
+                    <a href="/shop">Continue Shopping</a>
                 </div>
                 <div class="cart-coupon mb-40">
                     <h4>Coupon</h4>
                     <p>Enter your coupon code if you have one.</p>
                     <div class="coupon_form_inner">
-                        <input type="text" placeholder="Coupon code" />
-                        <input type="submit" value="Apply Coupon" />
-                    </div>
+                        <input type="text" :name=coupon_code v-model="coupon_code" placeholder="Coupon code" />
+                        <input type="submit" value="Apply Coupon" @click.prevent="verifyCouponCode()" />
+                    </div><br/>
+                    <span style="margin: 0px 15px; color: red;">{{err_message}}</span>
                 </div>
             </div>
             <div class="col-md-4 col-12">
@@ -53,12 +54,16 @@
                             <tbody>
                                 <tr class="cart-subtotal">
                                     <th>Subtotal</th>
-                                    <td><span class="amount">&#2547; {{ cartObj.calculateTotalInCart() }}</span></td>
+                                    <td><span class="amount">&#2547; {{ cartObj.calculateSubTotalInCart() }}</span></td>
+                                </tr>
+                                <tr class="cart-subtotal">
+                                    <th>Discount</th>
+                                    <td><span class="amount">&#2547; {{ cartObj.discount }}</span></td>
                                 </tr>
                                 <tr class="order-total">
                                     <th>Total</th>
                                     <td>
-                                        <strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart() }}</span></strong>
+                                        <strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart( cartObj.discount ) }}</span></strong>
                                     </td>
                                 </tr>											
                             </tbody>
@@ -78,7 +83,25 @@
 
 <script setup>
 import { cartStore } from '@/store/cart.js'
+import {ref} from 'vue'
+import axios from "axios";
 
 const cartObj = cartStore();
+
+const coupon_code = ref('');
+const err_message = ref('');
+const discount = ref(0.00);
+
+const verifyCouponCode = async() =>{
+    return await axios.get('/api/verifyCouponCode', {
+    params: {
+        couponCode: coupon_code.value
+    }
+    })
+        .then((res) => {err_message.value = ''; 
+        discount.value = cartObj.applyCoupon(res.data.coupon_precent);
+        })
+        .catch((err) => err_message.value = err.response.data.message)
+}
 
 </script>

@@ -59,12 +59,12 @@
                                         <h4>Subtotal</h4>
                                     </div>
                                     <div class="cart_price">
-                                        <h4>&#2547; {{ cartObj.calculateTotalInCart()}}</h4>
+                                        <h4>&#2547; {{ cartObj.calculateSubTotalInCart()}}</h4>
                                     </div>
                                 </li>
                                 <li class="cart_btn_wrapper">
                                     <router-link to="/cart" class="cart_btn">view cart</router-link>
-                                    <a class="cart_btn " href="checkout.html">checkout</a>
+                                    <a class="cart_btn " href="/checkout">checkout</a>
                                 </li>
                             </ul>
                         </div>
