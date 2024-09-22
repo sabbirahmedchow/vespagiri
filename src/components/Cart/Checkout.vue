@@ -101,7 +101,7 @@
                                 <input id="ship-box" type="checkbox" />
                             </h3>
                         </div>
-                        <div id="ship-box-info" class="row">
+                        <div id="ship-box-info">
                             <div class="col-md-12">
                                 <div class="country-select">
                                     <label>Country <span class="required">*</span></label>
@@ -211,6 +211,10 @@
                             <tr class="cart-subtotal">
                                 <th>Discount</th>
                                 <td><span class="amount">&#2547; {{ cartObj.discount }}</span></td>
+                            </tr>
+                            <tr class="cart-subtotal">
+                                <th>Shipping</th>
+                                <td><span class="amount">&#2547; 0.00</span></td>
                             </tr>
                             <tr class="order-total">
                                 <th>Order Total</th>

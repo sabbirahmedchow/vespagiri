@@ -36,6 +36,7 @@ export const cartStore = defineStore('cart', {
         },
 
         applyCoupon(coupon){
+            if(coupon != '')
             this.coupon_percent = coupon;
             this.discount = (coupon * this.calculateSubTotalInCart()) / 100;
             this.calculateTotalInCart(this.discount);
@@ -54,9 +55,10 @@ export const cartStore = defineStore('cart', {
                     let getProduct = this.cart.find(({product_id}) => product_id === id);
                     if(getProduct){
                         this.cart.splice(this.cart.findIndex(a => a.product_id === getProduct.product_id) , 1)
+                        this.applyCoupon(this.coupon_percent); // recalculate the discount amount.
                     }
-                    if(this.cartTotalQuantity() == 0 && this.discount != 0.00){
-                        this.discount = 0.00;
+                    if(this.cartTotalQuantity() == 0){
+                       this.reset();
                     }
                                 
                 }
@@ -80,6 +82,7 @@ export const cartStore = defineStore('cart', {
         reset() {
             this.cart = [];
             this.discount = 0.00;
+            this.coupon_percent = 0.00;
           }
         
 

@@ -19,7 +19,7 @@
                                 <td class="pro-thumbnail"><img :src="'/img/product/product_small/' + cartProduct.product_image" :alt=cartProduct.product_name></td>
                                 <td class="pro-title"><a href="#">{{ cartProduct.product_name }}</a></td>
                                 <td class="pro-price"><span class="amount">&#2547; {{ parseFloat(cartProduct.product_price).toFixed(2) }}</span></td>
-                                <td class="pro-quantity"><div class="product-quantity"><input type="number" min="1" v-model.quantity = cartProduct.product_quantity /></div></td>
+                                <td class="pro-quantity"><div class="product-quantity"><input type="number" min="1" @click="cartObj.applyCoupon(cartObj.coupon_percent)" v-model.quantity = cartProduct.product_quantity /></div></td>
                                 <td class="pro-subtotal">&#2547; {{ cartObj.getProductPriceByQuantity(cartProduct.product_id) }}</td>
                                 <td class="pro-remove"><a href="#" @click="cartObj.deleteProductFromCart(cartProduct.product_id)">×</a></td>
                             </tr>

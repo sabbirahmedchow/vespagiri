@@ -114,6 +114,8 @@
 import { ref, computed, onMounted, inject } from 'vue';
 import axios from "axios";
 import { cartStore } from '@/store/cart.js'
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const cartObj = cartStore();
  
@@ -213,6 +215,15 @@ const ShowProducts = computed(() => {
         product_quantity : 1
     };
     cartObj.cart.push(cartProduct);
+
+    if(cartObj.coupon_percent != 0.00){
+        cartObj.applyCoupon(cartObj.coupon_percent); // recalculate the discount if there is any previous coupon code.
+    }
+    toast("Product added to cart!", {
+        "theme": "auto",
+        "type": "success",
+        "dangerouslyHTMLString": true
+    })
    }
 }
 
