@@ -139,6 +139,8 @@ input[type="number"] {
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from "axios";
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
 let firstVal = ref(0);
 let secondVal = ref(0);
@@ -165,6 +167,8 @@ let loginData = {
     username: "",
     password: ""
 };
+
+let page = '';
 
 function randCaptchaValueCalc() {
     
@@ -211,13 +215,22 @@ async function submitRegisterForm(){
 }
 
 async function submitLoginForm(){
+    if(route.query.page != null)
+    {
+        this.page = route.query.page;
+        this.loginData['page'] = this.page;
+    }
     return await axios.post('/api/userLogin', this.loginData)
     .then((res) =>{
-        if(res.data[1] == 0)
+        if(res.data[1] == 0) // error
         {
             confirmLoginMsg.value = res.data[0];
             return false;
         }
+        else if(res.data[1] == 2){  // for checkout page
+            confirmLoginMsg.value = res.data[0];
+            location.href= "/checkout";
+        } 
         else{
             confirmLoginMsg.value = res.data[0];
             location.href= window.location.origin;

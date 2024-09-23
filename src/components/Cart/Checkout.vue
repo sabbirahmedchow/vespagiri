@@ -47,6 +47,7 @@
                             <div class="country-select">
                                 <label>Division / City <span class="required">*</span></label>
                                 <select>
+                                    <option value="">Select</option>  
                                     <option value="Barishal">Barishal</option>
                                     <option value="Chattogram">Chattogram</option>
                                     <option value="Dhaka">Dhaka</option>

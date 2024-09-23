@@ -71,7 +71,7 @@
                     </div>
                     
                     <div class="proceed-to-checkout section mt-30">
-                        <router-link to="/checkout">Proceed to Checkout</router-link>
+                        <router-link :to=link>Proceed to Checkout</router-link>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
 
 <script setup>
 import { cartStore } from '@/store/cart.js'
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import axios from "axios";
 
 const cartObj = cartStore();
@@ -91,6 +91,7 @@ const cartObj = cartStore();
 const coupon_code = ref('');
 const err_message = ref('');
 const discount = ref(0.00);
+let link = ref('');
 
 const verifyCouponCode = async() =>{
     return await axios.get('/api/verifyCouponCode', {
@@ -104,4 +105,12 @@ const verifyCouponCode = async() =>{
         .catch((err) => err_message.value = err.response.data.message)
 }
 
+onMounted(() => {
+    if (document.cookie.indexOf('accessTokenUser') > -1  ) {
+        link.value='/checkout';
+}
+else{
+    link.value='/login?page=checkout';
+}
+})
 </script>

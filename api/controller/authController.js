@@ -8,7 +8,11 @@ module.exports.login = async(req, res) => {
     userRes = await User.findOne({ username: req.body.username });
     if (userRes == null) {
       res.send(["This account does not exist.", 0]);
-    } else {
+    } 
+    else if(userRes.is_active == false){
+      res.send(["This account is not activated yet.", 0]);  
+    }
+    else {
       bcrypt.compare(req.body.password, userRes.password, function(
         err,
         result
@@ -25,6 +29,9 @@ module.exports.login = async(req, res) => {
             maxAge: 24 * 60 * 60 * 1000
           });
           res.cookie("user_fullname", userRes.fullname);
+          if(req.body.page != null){
+            res.send(["Successfully Logged In. Redirecting...", 2]);
+          }
           res.send(["Successfully Logged In. Redirecting...", 1]);
          
         } else {
