@@ -29,6 +29,7 @@ module.exports.login = async(req, res) => {
             maxAge: 24 * 60 * 60 * 1000
           });
           res.cookie("user_fullname", userRes.fullname);
+          res.cookie("user_address", userRes.address);
           if(req.body.page != null){
             res.send(["Successfully Logged In. Redirecting...", 2]);
           }

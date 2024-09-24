@@ -17,7 +17,7 @@
                         <div class="col-md-6">
                             <div class="checkout-form-list">
                                 <label>First Name <span class="required">*</span></label>										
-                                <input type="text" placeholder="" />
+                                <input type="text" placeholder="" :value=user_name />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <div class="checkout-form-list">
                                 <label>Address <span class="required">*</span></label>
-                                <input type="text" placeholder="Street address" />
+                                <input type="text" placeholder="Street address" :value=address />
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -270,8 +270,21 @@
 </template>    
 
 <script setup>
-import { cartStore } from '@/store/cart.js'
+import { cartStore } from '@/store/cart.js';
+import {ref, onMounted} from 'vue';
+
+let user_name = ref('');
+let address = ref('');
 
 const cartObj = cartStore();
+
+onMounted(() => {
+    
+if (document.cookie.indexOf('user_fullname') > -1  ){
+    user_name.value = document.cookie.split('user_fullname=')[1].split(';')[0].replace(/%20/g, " ");
+    address.value = decodeURIComponent(document.cookie.split('user_address=')[1].split(';')[0].replace(/%20/g, " "));
+}
+
+});
 
 </script>

@@ -106,7 +106,7 @@ const verifyCouponCode = async() =>{
 }
 
 onMounted(() => {
-    if (document.cookie.indexOf('accessTokenUser') > -1  ) {
+    if (document.cookie.indexOf('user_fullname') > -1  ) {
         link.value='/checkout';
 }
 else{
