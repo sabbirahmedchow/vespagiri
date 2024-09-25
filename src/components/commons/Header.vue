@@ -64,7 +64,8 @@
                                 </li>
                                 <li class="cart_btn_wrapper">
                                     <router-link to="/cart" class="cart_btn">view cart</router-link>
-                                    <a class="cart_btn " href="/checkout">checkout</a>
+                                    <router-link class="cart_btn" :to=link>checkout</router-link>
+                                    
                                 </li>
                             </ul>
                         </div>
@@ -77,7 +78,18 @@
 </template>
 <script setup>
 import { cartStore } from '@/store/cart.js'
+import {ref, onMounted} from 'vue'
 
 const cartObj = cartStore();
+let link = ref('');
+
+onMounted(() => {
+    if (document.cookie.indexOf('user_fullname') > -1  ) {
+        link.value='/checkout';
+}
+else{
+    link.value='/login?page=checkout';
+}
+})
 
 </script>

@@ -46,7 +46,7 @@
                         <div class="col-md-12">
                             <div class="country-select">
                                 <label>Division / City <span class="required">*</span></label>
-                                <select>
+                                <select @change="cartObj.calculateShipping($event)">
                                     <option value="">Select</option>  
                                     <option value="Barishal">Barishal</option>
                                     <option value="Chattogram">Chattogram</option>
@@ -215,11 +215,11 @@
                             </tr>
                             <tr class="cart-subtotal">
                                 <th>Shipping</th>
-                                <td><span class="amount">&#2547; 0.00</span></td>
+                                <td><span class="amount">&#2547; {{ cartObj.shipping_cost }}</span></td>
                             </tr>
                             <tr class="order-total">
                                 <th>Order Total</th>
-                                <td><strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart( cartObj.discount ) }}</span></strong>
+                                <td><strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart( cartObj.discount, cartObj.shipping_cost ) }}</span></strong>
                                 </td>
                             </tr>								
                         </tfoot>

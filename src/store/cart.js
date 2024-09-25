@@ -5,7 +5,9 @@ export const cartStore = defineStore('cart', {
         return {
         cart: [],
         discount: 0.00,
-        coupon_percent: 0.00
+        coupon_percent: 0.00,
+        final_amount: 0.00,
+        shipping_cost: 0.00
         }
     },
 
@@ -32,6 +34,8 @@ export const cartStore = defineStore('cart', {
                 unit_price = this.cart[i].product_price * this.cart[i].product_quantity;
                 total_price += unit_price; 
             }  
+            this.final_amount = parseFloat(total_price).toFixed(2);           
+
             return parseFloat(total_price).toFixed(2);           
         },
 
@@ -39,13 +43,22 @@ export const cartStore = defineStore('cart', {
             if(coupon != '')
             this.coupon_percent = coupon;
             this.discount = (coupon * this.calculateSubTotalInCart()) / 100;
-            this.calculateTotalInCart(this.discount);
+            this.calculateTotalInCart(this.discount, this.shipping_cost);
             return parseFloat(this.discount).toFixed(2);           
         },
 
-        calculateTotalInCart(discounted_amount=0.00){
-            let final_amount = this.calculateSubTotalInCart() - discounted_amount;
-            return parseFloat(final_amount).toFixed(2);
+        calculateTotalInCart(discounted_amount=0.00, shipping=0.00){
+            this.final_amount = this.calculateSubTotalInCart() - discounted_amount + shipping;
+            return parseFloat(this.final_amount).toFixed(2);
+        },
+
+        calculateShipping(evt){
+            if(evt.target.value == "Dhaka")
+            this.shipping_cost = 80.00;
+            else
+            this.shipping_cost = 160.00;
+            //this.final_amount += this.shipping_cost; 
+            this.calculateTotalInCart(this.discount, this.shipping_cost); // recalculate the final amount.
         },
 
         
@@ -83,6 +96,8 @@ export const cartStore = defineStore('cart', {
             this.cart = [];
             this.discount = 0.00;
             this.coupon_percent = 0.00;
+            this.final_amount = 0.00;
+            this.shipping_cost = 0.00;
           }
         
 

@@ -63,7 +63,7 @@
                                 <tr class="order-total">
                                     <th>Total</th>
                                     <td>
-                                        <strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart( cartObj.discount ) }}</span></strong>
+                                        <strong><span class="amount">&#2547; {{ cartObj.calculateTotalInCart( cartObj.discount) }}</span></strong>
                                     </td>
                                 </tr>											
                             </tbody>
