@@ -43,7 +43,9 @@
                         <input type="text" :name=coupon_code v-model="coupon_code" placeholder="Coupon code" />
                         <input type="submit" value="Apply Coupon" @click.prevent="verifyCouponCode()" />
                     </div><br/>
-                    <span style="margin: 0px 15px; color: red;">{{err_message}}</span>
+                    <span style="margin: 0px 15px; color: red;">
+                        <img v-if="isLoading === true" src="/images/loader.gif" width="50" alt="Loading" />
+                        {{err_message}}</span>
                 </div>
             </div>
             <div class="col-md-4 col-12">
@@ -92,17 +94,24 @@ const coupon_code = ref('');
 const err_message = ref('');
 const discount = ref(0.00);
 let link = ref('');
+let isLoading = ref(false);
 
 const verifyCouponCode = async() =>{
+    isLoading.value = true;
     return await axios.get('/api/verifyCouponCode', {
     params: {
         couponCode: coupon_code.value
     }
     })
-        .then((res) => {err_message.value = ''; 
-        discount.value = cartObj.applyCoupon(res.data.coupon_precent);
+        .then((res) => {
+            isLoading.value = false;
+            err_message.value = ''; 
+            discount.value = cartObj.applyCoupon(res.data.coupon_precent);
         })
-        .catch((err) => err_message.value = err.response.data.message)
+        .catch((err) => {
+            isLoading.value = false;
+            err_message.value = err.response.data.message
+        })
 }
 
 onMounted(() => {

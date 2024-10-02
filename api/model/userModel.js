@@ -22,7 +22,9 @@ var userSchema = new Schema({
     type:Boolean,
     default: 0
   },
-  avatar: String
+  avatar: String,
+  city: String,
+  zip: Number
   
 });
 

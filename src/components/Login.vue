@@ -27,6 +27,7 @@
                 </div>
                 <div class="login_form form_register ">
                     <form action="#" @submit.prevent="submitRegisterForm()">
+                        <img v-if="isLoading === true" src="/images/loader.gif" width="80" alt="Loading" />
                         <p style='text-align:center; font-weight:bold; color: red;'>
                             {{ confirmRegistrationMsg }}
                         </p>
@@ -84,6 +85,7 @@
                     </div>
                     <div class="login_form login">
                         <form action="#" @submit.prevent="submitLoginForm()">
+                            <img v-if="isLoading === true" src="/images/loader.gif" width="80" alt="Loading" />
                             <p style='text-align:center; font-weight:bold; color: red;'>
                                 {{ confirmLoginMsg }}
                             </p>
@@ -152,6 +154,7 @@ let captcha = "";
 let passwordMessage = ref("");
 let confirmRegistrationMsg = ref("");
 let confirmLoginMsg = ref("");
+let isLoading = ref(false);
 
 let userData = {
     full_name: "",
@@ -183,14 +186,17 @@ function randCaptchaValueCalc() {
 }
 
 async function submitRegisterForm(){
+        isLoading.value=true;
         passwordMessage.value = '';
         captchaMessage.value = '';
 
         if(this.userData.password != this.userData.conf_password){
+            isLoading.value=false;
             passwordMessage.value = "Password and Confirm Password does not match";
             return false;
         }
         if(this.captcha != result){
+            isLoading.value=false;
             captchaMessage.value = "Invalid Captcha";
             return false;
         }
@@ -215,6 +221,7 @@ async function submitRegisterForm(){
 }
 
 async function submitLoginForm(){
+    isLoading.value=true;
     if(route.query.page != null)
     {
         this.page = route.query.page;
@@ -224,14 +231,17 @@ async function submitLoginForm(){
     .then((res) =>{
         if(res.data[1] == 0) // error
         {
+            isLoading.value=false;
             confirmLoginMsg.value = res.data[0];
             return false;
         }
         else if(res.data[1] == 2){  // for checkout page
+            isLoading.value=false;
             confirmLoginMsg.value = res.data[0];
             location.href= "/checkout";
         } 
         else{
+            isLoading.value=false;
             confirmLoginMsg.value = res.data[0];
             location.href= window.location.origin;
         }

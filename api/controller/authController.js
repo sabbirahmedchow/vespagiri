@@ -28,6 +28,7 @@ module.exports.login = async(req, res) => {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000
           });
+          res.cookie("user_id", userRes._id.toString());
           res.cookie("user_fullname", userRes.fullname);
           res.cookie("user_address", userRes.address);
           if(req.body.page != null){

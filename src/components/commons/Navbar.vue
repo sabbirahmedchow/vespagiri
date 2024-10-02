@@ -24,7 +24,7 @@
                         </ul>
                         <ul v-else>
                             <li><router-link to="#">Welcome, {{user_fullname}}</router-link> </li>
-                            <li> <router-link to="#" @click="logout()">Logout</router-link></li>							                    
+                            <li> <router-link to="" @click="logout()">Logout</router-link></li>							                    
                         </ul>
                     </div>
                 </div>

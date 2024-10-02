@@ -261,7 +261,7 @@ textarea {
 /*************************
         Input
 *************************/
-input {
+input:not([type='radio']) {
     background: #eceff8;
     border: 1px solid #eee;
     height: 45px;
@@ -272,6 +272,9 @@ input {
     color: #626262;
     width: 100%;
 }
+
+
+
 select {
     width: 100%;
     background: #eceff8;

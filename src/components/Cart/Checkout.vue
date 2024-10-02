@@ -1,14 +1,15 @@
 <template>
+    <form action="#" @submit.prevent method="post">
     <div class="row">
         <div class="col-lg-6 col-md-12 col-12">
-            <form action="#">
+            
                 <div class="checkbox-form">						
                     <h3>Billing Details</h3>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="country-select">
                                 <label>Country <span class="required">*</span></label>
-                                <select>
+                                <select name="country" v-model="billing.country" required>
                                   <option value="BD">Bangladesh</option>
                                   
                                 </select> 										
@@ -17,36 +18,42 @@
                         <div class="col-md-6">
                             <div class="checkout-form-list">
                                 <label>First Name <span class="required">*</span></label>										
-                                <input type="text" placeholder="" :value=user_name />
+                                <input type="text" v-model="billing.firstName" name="firstName" placeholder="" required />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="checkout-form-list">
                                 <label>Last Name <span class="required">*</span></label>										
-                                <input type="text" placeholder="" />
+                                <input type="text" v-model="billing.lastName" name="lastName" placeholder="" required />
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="checkout-form-list">
                                 <label>Company Name</label>
-                                <input type="text" placeholder="" />
+                                <input type="text" v-model="billing.company" name="company" placeholder="" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="checkout-form-list">
+                                <label>Email</label>
+                                <input type="email" v-model="billing.email" name="email" placeholder="" required />
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="checkout-form-list">
                                 <label>Address <span class="required">*</span></label>
-                                <input type="text" placeholder="Street address" :value=address />
+                                <input type="text" v-model="billing.address" name="address" placeholder="Street address" required />
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="checkout-form-list">									
-                                <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
+                                <input type="text" v-model="billing.address2" name="address2" placeholder="Apartment, suite, unit etc. (optional)" />
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="country-select">
                                 <label>Division / City <span class="required">*</span></label>
-                                <select @change="cartObj.calculateShipping($event)">
+                                <select name="city" v-model="billing.city" @change="cartObj.calculateShipping($event)" required>
                                     <option value="">Select</option>  
                                     <option value="Barishal">Barishal</option>
                                     <option value="Chattogram">Chattogram</option>
@@ -62,125 +69,125 @@
                         <div class="col-md-6">
                             <div class="checkout-form-list">
                                 <label>Phone <span class="required">*</span></label>										
-                                <input type="text" placeholder="" />
+                                <input type="text" v-model="billing.phone" name="phone" placeholder="" required />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="checkout-form-list">
                                 <label>Postcode / Zip <span class="required">*</span></label>										
-                                <input type="text" />
+                                <input type="text" v-model="billing.zip" name="zip" required />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="checkout-form-list">
-                                <label>Email Address <span class="required">*</span></label>										
-                                <input type="email" />
+                                <label>Username </label>										
+                                <input type="text" v-model="billing.username" name="username" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="checkout-form-list">
-                                <label>Password  <span class="required">*</span></label>										
-                                <input type="password" />
+                                <label>Password </label>										
+                                <input type="password" v-model="billing.password" name="password" />
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="checkout-form-list create-acc">	
-                                <input id="cbox" type="checkbox" />
+                                <input id="cbox" type="checkbox" name="is_create_account" v-model="billing.is_create_account" />
                                 <label for="cbox">Create an account?</label>
                             </div>
-                            <div id="cbox_info" class="checkout-form-list create-account">
-                                <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                                <label>Account password  <span class="required">*</span></label>
-                                <input type="password" placeholder="password" />	
-                            </div>
+                            
                         </div>								
                     </div>
                     <div class="different-address">
                         <div class="ship-different-title">
                             <h3>
                                 <label for="ship-box">Ship to a different address?</label>
-                                <input id="ship-box" type="checkbox" />
+                                <input id="ship-box" type="checkbox" name="ship_diff" v-model="billing.ship_diff" />
                             </h3>
                         </div>
                         <div id="ship-box-info">
                             <div class="col-md-12">
                                 <div class="country-select">
-                                    <label>Country <span class="required">*</span></label>
-                                    <select>
-                                      <option value="BD">Bangladesh</option>
+                                    <label>Country </label>
+                                    <select v-model="shipping.scountry">
+                                      <option value="BD" name="scountry">Bangladesh</option>
                                       
                                     </select> 										
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <label>First Name <span class="required">*</span></label>										
-                                    <input type="text" placeholder="" />
+                                    <label>First Name</label>										
+                                    <input type="text" placeholder="" name="sfirstName" v-model="shipping.sfirstName" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <label>Last Name <span class="required">*</span></label>										
-                                    <input type="text" placeholder="" />
+                                    <label>Last Name </label>										
+                                    <input type="text" placeholder="" name="slastName" v-model="shipping.slastName" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Company Name</label>
-                                    <input type="text" placeholder="" />
+                                    <input type="text" placeholder="" name="scompany" v-model="shipping.scompany" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <label>Address <span class="required">*</span></label>
-                                    <input type="text" placeholder="Street address" />
+                                    <label>Address </label>
+                                    <input type="text" placeholder="Street address" name="saddress" v-model="shipping.saddress"/>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">									
-                                    <input type="text" placeholder="Apartment, suite, unit etc. (optional)" />
+                                    <input type="text" name="saddress2" v-model="shipping.saddress2" placeholder="Apartment, suite, unit etc. (optional)" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <label>Town / City <span class="required">*</span></label>
-                                    <input type="text" placeholder="Town / City" />
+                                    <label>Division / City </label>
+                                    <select name="scity" v-model="shipping.scity" @change="cartObj.calculateShipping($event)">
+                                    <option value="">Select</option>  
+                                    <option value="Barishal">Barishal</option>
+                                    <option value="Chattogram">Chattogram</option>
+                                    <option value="Dhaka">Dhaka</option>
+                                    <option value="Khulna">Khulna</option>
+                                    <option value="Mymensingh">Mymensingh</option>
+                                    <option value="Rajshahi">Rajshahi</option>
+                                    <option value="Rangpur">Rangpur</option>
+                                    <option value="Sylhet">Sylhet</option>
+                                </select> 	
+                                </div>
+                            </div>
+                           <div class="col-md-12">
+                                <div class="checkout-form-list">
+                                    <label>Postcode / Zip </label>										
+                                    <input type="text" placeholder="Postcode / Zip" name="szip" v-model="shipping.szip" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <label>State / County <span class="required">*</span></label>										
-                                    <input type="text" placeholder="" />
+                                    <label>Email Address </label>										
+                                    <input type="email" placeholder="" name="semail" v-model="shipping.semail" />
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
-                                    <label>Postcode / Zip <span class="required">*</span></label>										
-                                    <input type="text" placeholder="Postcode / Zip" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="checkout-form-list">
-                                    <label>Email Address <span class="required">*</span></label>										
-                                    <input type="email" placeholder="" />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="checkout-form-list">
-                                    <label>Phone  <span class="required">*</span></label>										
-                                    <input type="text" placeholder="Postcode / Zip" />
+                                    <label>Phone  </label>										
+                                    <input type="text" placeholder="Phone" name="sphone" v-model="shipping.sphone" />
                                 </div>
                             </div>								
                         </div>
                         <div class="order-notes">
                             <div class="checkout-form-list mrg-nn">
                                 <label>Order Notes</label>
-                                <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery." ></textarea>
+                                <textarea id="checkout-mess" cols="30" rows="10" name="notes" v-model="billing.notes" placeholder="Notes about your order, e.g. special notes for delivery." ></textarea>
                             </div>									
                         </div>
                     </div>													
                 </div>
-            </form>
+            
         </div>	
         <div class="col-lg-6 col-md-12 col-12">
             <div class="your-order">
@@ -226,60 +233,116 @@
                     </table>
                 </div>
                 <div class="payment-method">
+                    <h3>Payment Method</h3>
                     <div class="payment-accordion">
                         <div class="panel-group" id="faq">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h5 class="panel-title"><a data-toggle="collapse" aria-expanded="true" data-parent="#faq" href="#payment-1">Direct Bank Transfer.</a></h5>
+                                    <h5 class="panel-title"><input type="radio" class="collapsed"  data-toggle="collapse" aria-expanded="false" data-parent="#faq" data-target="#payment-1" name="payment_mode" v-model="paymentMode.payment_mode" value="bank"> Direct Bank Transfer</h5>
                                 </div>
-                                <div id="payment-1" class="panel-collapse collapse show">
+                                <div id="payment-1" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                        <p>Bank payment is under procesing. We will add it as soon as it becomes activated.</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h5 class="panel-title"><a class="collapsed" data-toggle="collapse" aria-expanded="false" data-parent="#faq" href="#payment-2">Cheque Payment</a></h5>
+                                    <h5 class="panel-title"><input type="radio" class="collapsed" data-toggle="collapse" aria-expanded="true" data-parent="#faq" data-target="#payment-2" name="payment_mode" v-model="paymentMode.payment_mode" value="bkash" checked> Mobile Payment</h5>
                                 </div>
-                                <div id="payment-2" class="panel-collapse collapse">
+                                <div id="payment-2" class="panel-collapse collapse show">
                                     <div class="panel-body">
-                                        <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                        <p><img src="/images/icon/bkash.png" alt="Bkash" title="Bkash" /></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h5 class="panel-title"><a class="collapsed" data-toggle="collapse" aria-expanded="false" data-parent="#faq" href="#payment-3">PayPal</a></h5>
+                                    
+                                    <h5 class="panel-title"><input type="radio" class="collapsed" aria-expanded="false" data-parent="#faq" data-toggle="collapse" data-target="#payment-3" name="payment_mode" v-model="paymentMode.payment_mode" value="cod"> Cash on Delivery</h5>
                                 </div>
                                 <div id="payment-3" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                        <p><img src="/images/icon/cod.png" alt="Cash on Delivery" title="Cash on Delivery" /></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="order-button-payment">
-                            <input type="submit" value="Place order" />
+                            <input type="submit" value="Place order" @click="sendOrderFormData()" />
                         </div>								
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</form> 
 </template>    
 
 <script setup>
 import { cartStore } from '@/store/cart.js';
 import {ref, onMounted} from 'vue';
+import axios from "axios";
 
 let user_name = ref('');
 let address = ref('');
 
 const cartObj = cartStore();
 
+let billing = {
+    country: "",
+    firstName: "",
+    lastName: "",
+    company: "",
+    address: "",
+    address2: "",
+    city: "",
+    phone: "",
+    email: "",
+    zip: "",
+    username: "",
+    password: "",
+    is_create_account: "",
+    userId: decodeURIComponent(document.cookie.split('user_id=')[1].split(';')[0].replace(/%20/g, " ")),
+    ship_diff: "",
+    notes: ""
+};
+
+let shipping = {
+    sfirstName: "",
+    slastName: "",
+    scompany: "",
+    saddress: "",
+    saddress2: "",
+    scity: "",
+    sphone: "",
+    semail: "",
+    szip: "",
+};
+
+let cart_info = sessionStorage.getItem('cart');
+
+let paymentMode = {
+    payment_mode: "bKash"
+};
+
+const sendOrderFormData = async() =>{
+    return await axios.get('/api/submitOrder', {
+    params: {
+        billing: billing,
+        shipping: shipping,
+        paymentMode: paymentMode,
+        cart_info: cart_info
+    }
+    })
+        .then((res) => {
+            err_message.value = ''; 
+        })
+        .catch((err) => err_message.value = err.response.data.message)
+}
+
+
 onMounted(() => {
-    
 if (document.cookie.indexOf('user_fullname') > -1  ){
     user_name.value = document.cookie.split('user_fullname=')[1].split(';')[0].replace(/%20/g, " ");
     address.value = decodeURIComponent(document.cookie.split('user_address=')[1].split(';')[0].replace(/%20/g, " "));
