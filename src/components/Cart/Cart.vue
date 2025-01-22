@@ -44,7 +44,7 @@
                         <input type="submit" value="Apply Coupon" @click.prevent="verifyCouponCode()" />
                     </div><br/>
                     <span style="margin: 0px 15px; color: red;">
-                        <img v-if="isLoading === true" src="/images/loader.gif" width="50" alt="Loading" />
+                        <img v-if="isLoading === true" src="/images/loader.gif" width="80" alt="Loading" />
                         {{err_message}}</span>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     </div>
                     
                     <div class="proceed-to-checkout section mt-30">
-                        <router-link :to=link>Proceed to Checkout</router-link>
+                        <router-link :to=link @click="checkCart()">Proceed to Checkout</router-link>
                     </div>
                 </div>
             </div>
@@ -87,8 +87,10 @@
 import { cartStore } from '@/store/cart.js'
 import {ref, onMounted} from 'vue'
 import axios from "axios";
+import { useRouter } from 'vue-router'
 
 const cartObj = cartStore();
+const route = useRouter();
 
 const coupon_code = ref('');
 const err_message = ref('');
@@ -105,7 +107,7 @@ const verifyCouponCode = async() =>{
     })
         .then((res) => {
             isLoading.value = false;
-            err_message.value = ''; 
+            err_message.value = 'Coupon Added.'; 
             discount.value = cartObj.applyCoupon(res.data.coupon_precent);
         })
         .catch((err) => {
@@ -114,8 +116,18 @@ const verifyCouponCode = async() =>{
         })
 }
 
+const checkCart = () =>{
+    if(cartObj.cart.length == 0)
+    {
+      alert("Your cart is empty. Add some product first.");
+      route.push("/cart");
+    } 
+    return true;
+}
+
 onMounted(() => {
     if (document.cookie.indexOf('user_fullname') > -1  ) {
+        
         link.value='/checkout';
 }
 else{

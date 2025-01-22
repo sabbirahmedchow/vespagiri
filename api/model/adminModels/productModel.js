@@ -9,6 +9,7 @@ var productSchema = new Schema({
   price: Number,
   description: String,
   image_big: String,
+  image_medium: String,
   image_small: String,
   is_sale: Boolean,
   is_featured: Boolean,

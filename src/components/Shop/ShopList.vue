@@ -17,7 +17,7 @@
                                 <div class="single__product">
                                     <span class="pro_badge" v-if="product.is_sale">Sale</span>
                                     <div class="produc_thumb">
-                                        <a href="#"><img :src="'/img/product/product_big/' + product.image_big" :alt="product.name"></a>
+                                        <a href="#"><img :src="'/img/product/product_medium/' + product.image_medium" :alt="product.name"></a>
                                     </div>
                                     <div class="product_hover">
                                         <div class="product_action">
@@ -26,7 +26,7 @@
                                             
                                         </div>
                                         <div class="product__desc">
-                                            <h3><a href="product-details.html">{{product.name}}</a></h3>
+                                            <h3><a :href="'product-detail/'+  product.name" >{{product.name}}</a></h3>
                                             <div class="price_amount">
                                                 <span class="current_price">&#2547; {{parseFloat(product.price).toFixed(2)}} </span>&nbsp;
                                                 <span class="discount_price" v-if="product.sale_percentage != null">-{{product.sale_percentage}}%</span>

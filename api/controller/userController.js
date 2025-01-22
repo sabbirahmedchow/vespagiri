@@ -39,22 +39,27 @@ module.exports.userRegister = async(req, res) => {
 }
 };
 
-module.exports.userAccount = (req, res) =>{
+module.exports.userAccount = async (req, res) =>{
   //console.log("Request user: "+req.user);
-  user.findOne({ _id: req.user }, function(err, userRes) {
-    if(err){console.log(err);}
-    res.send(userRes);
-  });
+    try{
+    userDetail = await user.find({_id: req.user});
+    res.send(userDetail);
+    }catch(err){
+        res.send({error: err.message});
+          
+    }
 };
 
 module.exports.userUpdateAccount = async (req, res) =>{
-  
+  console.log(req.body);
   if(req.body.password == "")
   {
-    await user.findOne({ _id: req.user }, function(err, userRes) {
-      if(err){console.log(err);}
-      req.body.password = userRes.password;
-   });
+    try{
+      let userDetail = await user.findOne({ _id: req.body.user_id });
+      req.body.password = userDetail.password;
+    }catch(err){
+      res.send({error: err.message});
+    }
   }
   else
   {
@@ -62,22 +67,15 @@ module.exports.userUpdateAccount = async (req, res) =>{
     req.body.password = hashP;
   }
   const data = req.body;
-  //console.log(data);
-  const id = {_id: req.user };
-  user.findByIdAndUpdate(id, data, function(err, userRes) {
-    if(err)
-    {
-      return res.send({
-        msgError: "Cannot update profile. Try again"
-      });
-    }
-    else
-    {
-      res.send({
-        msgSuccess: "Profile updated successfully."
-      });
-    }
-  });
+  console.log(data);
+  const id = {_id: req.body.user_id };
+  try{
+    await user.findByIdAndUpdate(id, data);
+    res.send("Profile updated successfully.");
+  }catch(err){
+    res.send({error: err.message})
+  }
+
 };
 
 

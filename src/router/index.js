@@ -11,6 +11,23 @@ import NewsDetail from '../views/NewsDetail.vue'
 import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import Account from '../views/Account.vue'
+import Thankyou from '../views/Thankyou.vue'
+
+const ifAuthenticated = (to, from, next) => {
+  //const { $cookies } = router.app.config.globalProperties;
+  if (document.cookie.indexOf('user_fullname') > -1) {
+    next();
+    return;
+  }
+  else
+  {
+  router.push({ 
+    name: 'Login',
+    
+  });
+}
+ };
 
 const routes = [
   {
@@ -32,9 +49,10 @@ const routes = [
   },
 
   {
-    path: '/product-detail',
+    path: '/product-detail/:name',
     name: 'Product Detail',
-    component: ProductDetail
+    component: ProductDetail,
+    props: true
   },
 
   {
@@ -77,8 +95,22 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+
+  {
+    path: '/thankyou',
+    name: 'Thankyou',
+    component: Thankyou
+  },
+
+  {
+    path: '/my-account',
+    name: 'Account',
+    component: Account,
+    beforeEnter: ifAuthenticated,
   }
 ]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes

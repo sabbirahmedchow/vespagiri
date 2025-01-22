@@ -98,7 +98,7 @@ $(function() {
         loop: true,
         nav: false,
         dots: false,
-        autoplay: false,
+        autoplay: true,
         autoplayTimeout: 5000,
         items: 4,
         responsive:{
@@ -218,12 +218,13 @@ $(function() {
     /*-------------------------------------------
     elevateZoom
     -------------------------------------------- */	
+       
     $("#zoom1").elevateZoom({
         gallery:'gallery_01', 
         responsive : true,
         zoomType : 'inner',
         cursor: 'crosshair'
-    });  
+    }); 
     
     /*------
       Counter Up

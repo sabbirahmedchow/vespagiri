@@ -11,7 +11,7 @@
                                 <li><router-link to="/shop" onclick="test()">Shop</router-link></li>
                                 <li><router-link to="/news">News</router-link></li>
                                 <li><router-link to="/contact">CONTACT </router-link></li>
-                                <li class="mega_item" v-if="isCookieSet"><a href="#">My Account</a></li>
+                                <li class="mega_item" v-if="isCookieSet"><router-link to="/my-account">My Account</router-link></li>
                             </ul>
                         </nav>
                     </div>

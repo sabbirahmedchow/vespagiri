@@ -1,4 +1,4 @@
-const order = require("../../model/adminModels/orderModel.js");
+const { order,orderBilling,orderShipping,orderPayment } = require("../../model/orderModel.js");
 
 module.exports.getOrder = async(req, res) => {
     try{
@@ -8,55 +8,27 @@ module.exports.getOrder = async(req, res) => {
         res.render('order/order', {error: err.message, data: req.cookies});
     }
 };
-module.exports.addNewProductForm = async(req, res) => {
-    try{
-        categoryRes = await category.find();
-        brandRes = await brand.find();
-    }catch(err){
-        res.render('product/product-add', {error: err.message});
-    }
-    res.render('product/product-add', {categoryRes, brandRes});
-};
 
-module.exports.submitCategory = async(req, res) => {
+module.exports.orderDetail = async(req, res) => {
     try{
-       const newCategory = new category({
-            name: req.body.category,
-        });
-        await newCategory.save(); 
-        res.send("<p style='text-align:center; font-weight:bold;'>Category added successfully.</p>")
+        let order_id = req.params.orderId;
+        order_list = await order.find({ orderId: order_id });
+        order_billing = await orderBilling.findOne({ orderId: order_id });
+        order_shipping = await orderShipping.findOne({ orderId: order_id });
+        order_payment = await orderPayment.findOne({ orderId: order_id });
+        //orderRes = await order.find();
+        res.render('order/order-detail', {order_id, ordered_list: order_list, order_billing: order_billing, order_shipping: order_shipping,  
+            order_payment: order_payment, data: req.cookies});
     }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred while saving. " + err.message + "</p>");      
+        res.render('order/order-detail', {error: err.message, data: req.cookies});
     }
 };
 
-module.exports.editCategoryForm = async(req, res) => {
-    try{
-        getCat = await category.findOne({ _id: req.params.catId })
-        res.render('misc/category-edit', {name: getCat.name, cat_id: req.params.catId});
-    }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred. " + err.message + "</p>");
-    }
-    
-};
-
-module.exports.editCategory = async(req, res) => {
-    try{
-        const data = {name: req.body.category};
-        const id = {_id: req.body.catId };
-        await category.findByIdAndUpdate(id, data)
-        res.send("<p style='text-align:center; font-weight:bold;'>Category updated successfully.</p>")
-    }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred while updating." + err.message + "</p>");      
-    }
-    
-};
-
-module.exports.deleteCategory = async(req, res) => {
-    try{
-        await category.deleteOne({ _id: req.params.catId })
-    }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred. " + err.message + "</p>");
-    }
-    
-};
+module.exports.changeOrderStatus = async(req, res) => {
+    let newStatus = {
+        order_status: req.body.status
+    };
+    const filter = { orderId: req.body.order_id };
+    await order.updateMany(filter, newStatus);
+    res.json({message: 'Order status has been changed'});
+}

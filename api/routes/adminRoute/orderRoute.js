@@ -4,6 +4,7 @@ const orderController = require("../../controller/adminController/orderControlle
 const route = Router();
 
 route.get("/orders", orderController.getOrder);
-route.get("/add-product", orderController.addNewProductForm);
+route.get("/order-detail/:orderId", orderController.orderDetail);
+route.post("/changeOrderStatus", orderController.changeOrderStatus);
 
 module.exports = route;

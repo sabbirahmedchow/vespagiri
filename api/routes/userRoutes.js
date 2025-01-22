@@ -5,7 +5,7 @@ const { authenticateToken } = require("../controller/authController");
 const route = Router();
 
 route.post("/userRegistration", userController.userRegister);
-route.post("/my_account", authenticateToken, userController.userAccount);
+route.get("/my_account", authenticateToken, userController.userAccount);
 route.post("/updateProfile", authenticateToken, userController.userUpdateAccount);
 
 module.exports = route;

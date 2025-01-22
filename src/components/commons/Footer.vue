@@ -132,7 +132,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="copyright_inner text-center">
-                            <p>©  2024 All rights reserved by Vespagiri.com </p>
+                            <p>©  2025 All rights reserved by Vespagiri.com </p>
                         </div>
                     </div>
                 </div>

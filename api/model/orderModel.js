@@ -8,9 +8,10 @@ var orderSchema = new Schema({
   product_price: Number,
   product_quantity: Number,
   subtotal: Number,
+  order_date: String,
   order_status: {
     type:String,
-    default: "Placed"
+    default: "placed"
   },
    
 });

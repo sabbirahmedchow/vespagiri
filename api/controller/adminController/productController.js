@@ -5,7 +5,7 @@ const brand = require("../../model/adminModels/brandModel");
 
 module.exports.getProduct = async(req, res) => {
     try{
-        productRes = await product.find();
+        productRes = await product.find().sort({_id: -1});
         res.render('product/product-list', {productRes, data: req.cookies});
     }catch(err){
         res.render('product/product-list', {error: err.message, data: req.cookies});
@@ -22,6 +22,20 @@ module.exports.addNewProductForm = async(req, res) => {
     
 };
 
+module.exports.editProductForm = async(req, res) => {
+    try{
+        prodDetail = await product.findOne({ _id: req.params.prodId });
+        prodCat = await productCategory.findOne({ product_id: req.params.prodId });
+        prodBrand = await productBrand.findOne({ product_id: req.params.prodId });
+        categoryList = await category.find();
+        brandList = await brand.find();
+        res.render('product/product-edit', {prodDetail, prodCat, prodBrand, categoryList, brandList, data: req.cookies});
+    }catch(err){
+        res.render('product/product-edit', {error: err.message, data: req.cookies});
+    }
+    
+};
+
 module.exports.submitProduct = async(req, res) => {
     try{
        const newProduct = new product({
@@ -29,6 +43,7 @@ module.exports.submitProduct = async(req, res) => {
             price: req.body.price,
             description: req.body.description,
             image_big: req.files.bigimage[0].filename,
+            image_medium: req.files.medimage[0].filename,
             image_small: req.files.smallimage[0].filename,
             is_sale: req.body.is_sale,
             is_featured: req.body.is_featured,
@@ -59,33 +74,65 @@ module.exports.submitProduct = async(req, res) => {
     }
 };
 
-module.exports.editCategoryForm = async(req, res) => {
+module.exports.updateProduct = async(req, res) => {
+    let updateProduct= '';
     try{
-        getCat = await category.findOne({ _id: req.params.catId })
-        res.render('misc/category-edit', {name: getCat.name, cat_id: req.params.catId});
-    }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred. " + err.message + "</p>");
+    if(req.file) 
+    { 
+        updateProduct = {
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            image_big: req.files.bigimage[0].filename,
+            image_medium: req.files.medimage[0].filename,
+            image_small: req.files.smallimage[0].filename,
+            is_sale: req.body.is_sale,
+            is_featured: req.body.is_featured,
+            sale_percentage: req.body.sale_percentage
+            
+        };
     }
-    
-};
+    else{
+        updateProduct = {
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            image_big: req.body.bigimage_old,
+            image_medium: req.body.medimage_old,
+            image_small: req.body.smallimage_old,
+            is_sale: req.body.is_sale,
+            is_featured: req.body.is_featured,
+            sale_percentage: req.body.sale_percentage
+            
+        };
+    }
+        const filter = { _id: req.body.product_id }
+        await product.findOneAndUpdate(filter, updateProduct, {
+            returnOriginal: false
+          }); 
 
-module.exports.editCategory = async(req, res) => {
-    try{
-        const data = {name: req.body.category};
-        const id = {_id: req.body.catId };
-        await category.findByIdAndUpdate(id, data)
-        res.send("<p style='text-align:center; font-weight:bold;'>Category updated successfully.</p>")
-    }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred while updating." + err.message + "</p>");      
-    }
-    
-};
+        if(req.body.category != ''){
+        const updateProdCat = {
+            category_id: req.body.category
+        };
+        const filterCat = { product_id: req.body.product_id }
+        await productCategory.findOneAndUpdate(filterCat, updateProdCat, {
+            returnOriginal: false
+          }); 
+        }
 
-module.exports.deleteCategory = async(req, res) => {
-    try{
-        await category.deleteOne({ _id: req.params.catId })
+        if(req.body.brand != ''){
+        const updateProdBrand = {
+            brand_id: req.body.brand
+        };
+        const filterBrand = { product_id: req.body.product_id }
+        await productBrand.findOneAndUpdate(filterBrand, updateProdBrand, {
+            returnOriginal: false
+          }); 
+        }
+
+        res.send("<p style='text-align:center; font-weight:bold;'>Product updated successfully.</p>")
     }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred. " + err.message + "</p>");
+        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred while updating. " + err.message + "</p>");      
     }
-    
 };

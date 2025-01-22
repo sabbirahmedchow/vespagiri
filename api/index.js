@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 var path = require('path');
 var parser = require('body-parser');
 const cookieParser = require("cookie-parser");
+var multer = require('multer');
+var upload = multer();
 
 
 
@@ -14,6 +16,7 @@ const catRoute = require("./routes/categoryRoute");
 const brandRoute = require("./routes/brandRoute");
 const couponRoute = require("./routes/couponRoute");
 const orderRoute = require("./routes/orderRoute");
+const wishlistRoute = require("./routes/wishlistRoute");
 
 //declare admin routes
 const adminCatRoute = require("./routes/adminRoute/categoryRoute");
@@ -53,9 +56,10 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions));
+app.use(upload.array()); 
 app.use(express.static(__dirname + '/admin/public'));
-app.use(express.json({ extended: false }));
-app.use(parser.urlencoded({ extended: false }))
+app.use(express.json({ extended: true }));
+app.use(parser.urlencoded({ extended: true }))
 app.use(parser.json())
 app.use(cookieParser());
 
@@ -67,6 +71,7 @@ app.use(catRoute);
 app.use(brandRoute);
 app.use(couponRoute);
 app.use(orderRoute);
+app.use(wishlistRoute);
 
 //admin routes
 app.use(adminCatRoute);

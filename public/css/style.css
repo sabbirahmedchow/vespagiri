@@ -1730,7 +1730,7 @@ input.cart-plus-minus-box {
   margin: 0;
   padding: 0;
   text-align: center;
-  width: 25px;
+  width: 70px;
 }
 /* Shrink wrap strategy 1 */
 
@@ -3489,3 +3489,39 @@ h5.panel-title {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+/*======================================================================
+  21.1 Checkout Success Page
+========================================================================*/
+.checkout-scard { background: #fff; -webkit-box-shadow:0 0 3px rgba(0,0,0,.3); box-shadow:0 0 3px rgba(0,0,0,.3); margin-bottom:30px; }
+.checkout-scard .card-body { padding:25px; }
+.checkout-scard .card-title { font-size:30px; margin-bottom:15px; font-weight: bold; font-family: 'Poppins', sans-serif; }
+.checkout-scard .badge {display: inline-block;
+  padding: .35em .65em;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;}
+  .fs-6 {
+    font-size: 1rem !important;
+}
+.mb-3 {
+    margin-bottom: 1rem !important;
+    font-weight: bold;
+}
+h2, .h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+}
+.checkout-scard .card-icon { color:#07864b; font-size:90px; line-height:90px; margin:0 0 10px; }
+.checkout-scard .text-order { padding:10px 20px; font-size:18px; font-weight:bold; }
+.ship-info-details { margin:0 0 20px; padding:0 0 12px; border:1px solid #ddd; border-radius:4px; }
+.ship-info-details h3 { background-color:#fbfbfb; font-size:15px; font-weight:600; padding:10px 15px; margin:-1px 0 15px; border-bottom:1px solid #ddd; border-top:1px solid #ddd; }
+.ship-info-details p { padding:0 15px; margin:0 0 5px; }
+.pro-name{float:left; width: 100%; text-align: left; font-size: 16px; font-weight: 600; }
+.item{width: 100%; text-align: right; font-size: 16px; font-weight: 600; }
+.order-table .table tfoot td{background:#FBFBFB; padding: 8px;}
+

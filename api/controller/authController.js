@@ -49,8 +49,7 @@ module.exports.login = async(req, res) => {
 
 //authenticate token as middleware
 module.exports.authenticateToken = (req, res, next) => {
-  const token = req.cookies["access_token_user"];
- 
+  const token = req.cookies["accessTokenUser"];
   if (token != "null") {
     
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {

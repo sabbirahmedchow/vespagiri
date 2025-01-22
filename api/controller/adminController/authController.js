@@ -1,10 +1,18 @@
 const jwt = require("jsonwebtoken");
 const user = require("../../model/userModel");
+const { order } = require("../../model/orderModel.js");
 var bcrypt = require("bcrypt");
 require("dotenv").config();
 
-module.exports.home = (req, res) => {
-  res.render("index", {data: req.cookies});
+
+module.exports.home = async(req, res) => {
+  let userCount = await user.countDocuments();
+  let orderCount = await order.countDocuments();
+  let itemSold = await order.aggregate([
+    {$group: {_id: '$userId', total: {$sum: "$product_quantity"}}}
+  ]);
+  let getOrders = await order.find();
+  res.render("index", {udata: userCount-1, numOrder: orderCount, itemSold: itemSold[0].total, allOrders: getOrders, data: req.cookies});
  
 };
 
@@ -13,6 +21,13 @@ module.exports.dashboard = async (req, res) => {
   {
     userRes = await user.findOne({ username: req.body.username, role: "admin" })
     
+    let userCount = await user.countDocuments();
+    let orderCount = await order.countDocuments();
+    let itemSold = await order.aggregate([
+      {$group: {_id: '$userId', total: {$sum: "$product_quantity"}}}
+    ]);
+    let getOrders = await order.find();
+
     bcrypt.compare(req.body.password, userRes.password, function(
         err,
         result
@@ -40,7 +55,7 @@ module.exports.dashboard = async (req, res) => {
               httpOnly: true,
               secure: process.env.NODE_ENV === "production",
             })
-          .render("index", {data: info});
+          .render("index", {udata: userCount-1, numOrder: orderCount, itemSold: itemSold[0].total, allOrders: getOrders, data: info});
           
         }
         else{
@@ -54,13 +69,13 @@ module.exports.dashboard = async (req, res) => {
 
 
 //generate access token
-module.exports.generateAccessToken = (req, res) => {
-  //console.log(req.body.user);
-  const token = jwt.sign({user: req.body.user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30m" });
-  return res.send({
-    token: token
-  });
-};
+// module.exports.generateAccessToken = (req, res) => {
+//   //console.log(req.body.user);
+//   const token = jwt.sign({user: req.body.user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30m" });
+//   return res.send({
+//     token: token
+//   });
+// };
 
 
 //authenticate token as middleware
@@ -84,25 +99,25 @@ else{
 
 
 //verify if the token is expired
-module.exports.verifyAccessToken = (req, res) => {
-  //console.log(req.body.token);
-  jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET, (err) => {
+// module.exports.verifyAccessToken = (req, res) => {
+//   //console.log(req.body.token);
+//   jwt.verify(req.body.token, process.env.ACCESS_TOKEN_SECRET, (err) => {
      
-      if (err) {
-        return res.send({
-        error: err,
+//       if (err) {
+//         return res.send({
+//         error: err,
         
-      }); 
-      //console.log("Something happened!!!");
-    }
-    else{
+//       }); 
+//       //console.log("Something happened!!!");
+//     }
+//     else{
       
-      return res.send({
-        error: ""
-      });
-    }  
-    });
- }
+//       return res.send({
+//         error: ""
+//       });
+//     }  
+//     });
+//  }
 
  module.exports.adminlogout = (req, res) => {
   let cks = req.cookies;

@@ -7,838 +7,42 @@
                         <h2>Featured Products</h2>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-9">
-                    <div class="nav product_tab_menu justify-content-end" role="tablist">
-                        <a class="active" href="#hot_all" data-toggle="tab" role="tab" aria-selected="true" aria-controls="hot_all">All</a>
-                        <a href="#hot_bike" data-toggle="tab" role="tab" aria-selected="false" aria-controls="hot_bike">Bike</a>
-                        <a href="#hot_tiar" data-toggle="tab" role="tab" aria-selected="false" aria-controls="hot_tiar">Tiar</a>
-                        <a href="#hot_parts" data-toggle="tab" role="tab" aria-selected="false" aria-controls="hot_parts">Parts</a>
-                        <a href="#hot_wheel" data-toggle="tab" role="tab" aria-selected="false" aria-controls="hot_wheel">Wheel</a>
-                        <a href="#hot_light" data-toggle="tab" role="tab" aria-selected="false" aria-controls="hot_light">Light</a>
-                    </div>
-                </div>
+                
             </div>
             <div class="row mt-60">
                 <div class="col-lg-9 col-md-12 ">
                     <div class="tab-content">
                         <div class="tab-pane active show fade" id="hot_all" role="tabpanel">
                             <div class="row">
-                                <div class="col-lg-4 col-md-6">
+                                <div class="col-lg-4 col-md-6" v-for="product in featured_products">
                                     <div class="single__product">
                                         <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/1.png" alt=""></a>
+                                            <a href="product-details.html">
+                                                <img :src="'/img/product/product_medium/' + product.image_medium" :alt="product.name">
+                                            </a>
                                         </div>
                                         <div class="product_hover">
                                             <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
+                                                <a href="#" title="Add To Cart" @click="addToCart(product)"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                <a href="#" @click.prevent="add_to_wishlist(product._id)" title="Wishlist" v-if="show_wishlist_icon"><i class="zmdi zmdi-favorite-outline"></i></a>
                                             </div>
                                             <div class="product__desc">
-                                                <h3><a href="product-details.html">Gasoline Scooter A9</a></h3>
+                                                <h3><a :href="'product-detail/'+  product.name" >{{product.name}}</a></h3>
                                                 <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
+                                                    <span class="current_price">&#2547; {{parseFloat(product.price).toFixed(2)}} </span>&nbsp;
+                                                <span class="discount_price" v-if="product.sale_percentage != null">-{{product.sale_percentage}}%</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/2.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Alloy Shimano z3</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/3.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Full Slev Shirt</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/4.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/5.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Full Slev Hudy</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/6.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Alloy Shimano z3</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="hot_bike" role="tabpanel">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/1.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Tandem Beach Cruiser</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/2.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/3.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/4.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/5.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/6.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="hot_tiar" role="tabpanel">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/1.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/2.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/3.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/4.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/5.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/6.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="hot_parts" role="tabpanel">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/1.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/2.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/3.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/4.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/5.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/6.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="hot_wheel" role="tabpanel">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/1.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/2.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/3.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/4.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/5.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/6.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="hot_light" role="tabpanel">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/1.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/2.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/3.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/4.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/5.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="single__product">
-                                        <div class="produc_thumb">
-                                            <a href="product-details.html"><img src="/img/product/6.png" alt=""></a>
-                                        </div>
-                                        <div class="product_hover">
-                                            <div class="product_action">
-                                                <a href="#" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
-                                                <a href="#" title="Compare"><i class="zmdi zmdi-refresh-alt"></i></a>
-                                            </div>
-                                            <div class="product__desc">
-                                                <h3><a href="product-details.html">Soffer Pro x33</a></h3>
-                                                <div class="price_amount">
-                                                    <span class="current_price">$2999.99</span>
-                                                    <span class="discount_price">-08%</span>
-                                                    <span class="old_price">$3700.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        
                         </div>
                     </div>
-                </div>
+                
                 <div class="col-lg-3 col-md-12">
                     <div class="single_banner long_hot_detals d-lg-none">
                         <a href="#"><img src="/img/banner/banner_tab_1.jpg" alt="Shop Banner"></a>
@@ -851,3 +55,88 @@
         </div>
     </div>
 </template>
+<script setup>
+
+import axios from "axios";
+import { onMounted, ref} from "vue";
+import { cartStore } from '@/store/cart.js';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
+const cartObj = cartStore();
+
+let featured_products = ref([]);
+let show_wishlist_icon = ref(false);
+const products = ref([]);
+
+const getFeaturedProducts = async () => {
+
+    return await axios.get('/api/getFeaturedProducts', {
+    })
+    .then((res) => {
+        
+        //console.log(url_title);
+        featured_products.value = res.data
+    })
+    .catch((err) => console.log(err));
+
+};
+
+const addToCart = (product) =>{
+
+   if(cartObj.checkProductExists(product._id))
+   {
+    let cartProduct = {
+        product_id : product._id,
+        product_name : product.name,
+        product_price : product.price,
+        product_image : product.image_small,
+        product_quantity : 1
+    };
+    cartObj.cart.push(cartProduct);
+
+    if(cartObj.coupon_percent != 0.00){
+        cartObj.applyCoupon(cartObj.coupon_percent); // recalculate the discount if there is any previous coupon code.
+    }
+    toast("Product added to cart!", {
+        "theme": "auto",
+        "type": "success",
+        "dangerouslyHTMLString": true
+    })
+   }
+}
+
+const add_to_wishlist = async (prod_id) => {
+
+    let btn = confirm("Do you want to add this product to your wishlist?");
+    if(btn == true)
+    {
+        let user_id = document.cookie.split(';').find(row => row.startsWith('user_id')).split('=')[1];
+        return await axios.post('/api/addToWishlist', {
+            params: {
+            product_id: prod_id,
+            user_id: user_id
+        }
+        })
+        .then((res) => {
+            if(res.data == "Success"){
+                toast("Product added to wishlist!", {
+                    "theme": "auto",
+                    "type": "success",
+                    "dangerouslyHTMLString": true
+                })
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+}
+
+onMounted(() => {
+    if (document.cookie.indexOf('user_fullname') > -1  ) {
+        
+        show_wishlist_icon.value = true;
+    }
+    getFeaturedProducts();
+
+});
+</script>

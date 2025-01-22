@@ -62,9 +62,9 @@
                                         <h4>&#2547; {{ cartObj.calculateSubTotalInCart()}}</h4>
                                     </div>
                                 </li>
-                                <li class="cart_btn_wrapper">
+                                <li>
                                     <router-link to="/cart" class="cart_btn">view cart</router-link>
-                                    <router-link class="cart_btn" :to=link>checkout</router-link>
+                                    
                                     
                                 </li>
                             </ul>

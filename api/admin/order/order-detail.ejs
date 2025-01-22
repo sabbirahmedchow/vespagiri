@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/header') %>
+<body class="animsition">
+    <div class="page-wrapper">
+        
+    <%- include('../partials/nav') %> 
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
+            <br/>
+
+            <section class="welcome p-t-10">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="title-4">Order Details # <%= order_id %></h1>
+                            
+                            <hr class="line-seprate">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DATA TABLE-->
+            <section class="p-t-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                                                        
+                            <div class="row m-t-30">
+                                <div class="col-lg-8">
+                                    <!-- RECENT REPORT-->
+                                    <div class="recent-report3 m-b-40">
+                                        <div class="title-wrap">
+                                            <h3 class="title-3">ordered items</h3>
+                                            
+                                        </div>
+                                        <div class="filters m-b-55">
+                                            <table class="table table-borderless table-data3">
+                                                <thead>
+                                                    <tr>
+                                                        <th>item</th>
+                                                        <th>quantity</th>
+                                                        <th>price</th>
+                                                        <th>total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% 
+                                                    sum = 0;
+                                                    status = '';
+                                                    order_id = '';
+                                                    for (var i = 0; i < ordered_list.length; i++) {
+                                                     sum = sum + ordered_list[i].subtotal;    
+                                                     status = ordered_list[0].order_status;
+                                                     order_id = ordered_list[0].orderId;
+                                                    %>  
+                                                    <tr class="hr">
+                                                        <td><%= ordered_list[i].product_name %> </td>
+                                                        <td><%= ordered_list[i].product_quantity %></td>
+                                                        <td>&#2547; <%= parseFloat(ordered_list[i].product_price).toFixed(2) %></td>
+                                                        <td>&#2547; <%= parseFloat(ordered_list[i].subtotal).toFixed(2) %></td>
+                                                    </tr>
+                                                    <% } %> 
+                                                </tbody>
+                                            </table>        
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- END RECENT REPORT-->
+                                </div>
+                                <div class="col-lg-4">
+                                    <!-- CHART PERCENT-->
+                                    <div class="chart-percent-3 m-b-40">
+                                        <h3 class="title-3 m-b-25">payment information</h3>
+                                        <table class="table table-borderless table-data3">
+                                            <thead>
+                                                <tr>
+                                                    <th>Description</th>
+                                                    <th>Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="hr">
+                                                <td>Grand Total: </td>
+                                                <td>&#2547; <%= parseFloat(sum).toFixed(2) %></td> 
+                                            </tr>
+                                            <tr class="hr">   
+                                                <td>Shipping: </td>
+                                                <td>&#2547; <%= parseFloat(order_payment.shipping_cost).toFixed(2) %></td> 
+                                            </tr>
+                                            <tr class="hr">
+                                                <td>Discount: </td>
+                                                <td>&#2547; <%= parseFloat(order_payment.discount).toFixed(2) %></td> 
+                                            </tr>
+                                            <tr class="hr">   
+                                                <td><b>Total:</b></td>
+                                                <td><b>&#2547; <%= parseFloat(order_payment.totalCost).toFixed(2) %></b></td>        
+                                            </tr>
+                                            <tbody>
+                                        </table>        
+                                    </div>
+                                    <!-- END CHART PERCENT-->
+                                
+                                </div>
+
+
+                                <div class="col-md-6 col-lg-4">
+                                    <!-- CHART-->
+                                    <div class="statistic-chart-1">
+                                        <h3 class="title-3 m-b-30">Billing Information</h3>
+                                        <table >
+                                            <tr>
+                                                <td>
+                                                    <b><%= order_billing.billingFirstName %> <%= order_billing.billingLastName %></b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                     <%= order_billing.billingAddress %> <%= order_billing.billingAddress2 %>
+                                                     <%= order_billing.billingZip %> <%= order_billing.billingcity %>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                     <abbr title="Email">E:</abbr> <%= order_billing.billingEmail %> <br />
+                                                     <abbr title="Phone">P:</abbr> (880) <%= order_billing.billingPhone %>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <!-- END CHART-->
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <!-- TOP CAMPAIGN-->
+                                    <div class="top-campaign">
+                                        <h3 class="title-3 m-b-30">Shipping Information</h3>
+                                        <div class="table-responsive">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <b><%= order_shipping.shippingFirstName %> <%= order_shipping.shippingLastName %></b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                         <%= order_shipping.shippingAddress %> <%= order_shipping.shippingAddress2 %>
+                                                         <%= order_shipping.shippingZip %> <%= order_shipping.shippingcity %>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                         <abbr title="Email">E:</abbr> <%= order_shipping.shippingEmail %> <br />
+                                                         <abbr title="Phone">P:</abbr> (880) <%= order_shipping.shippingPhone %>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- END TOP CAMPAIGN-->
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <!-- CHART PERCENT-->
+                                    <div class="chart-percent-2">
+                                        <h3 class="title-3 m-b-30">Delivery Information</h3>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <i class="fas fa-truck fa-2x"></i><br/>
+                                                    <p><b>Standard Delivery</b></p>
+                                                    <span><b>Order ID:</b>  <%= order_payment.orderId %></span><br/>
+                                                    <span><b>Payment Mode:</b>  <%= order_payment.paymentMethod %></span><br/>
+                                                    <span><b>Payment Status:</b>  <%= order_payment.payment_status %></span>
+                                                </td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </div>
+                                    <!-- END CHART PERCENT-->
+                                
+                            </div>
+                            <% 
+                            action_processed = action_shipped = action_delivered = action_cancelled = '';
+                            if(status == 'processed') 
+                            { action_processed = 'disabled'  } 
+                            else if(status == 'shipped')
+                            { action_shipped = 'disabled'}
+                            else if(status == 'delivered')
+                            { action_delivered = 'disabled'}
+                            else if(status == 'cancelled')
+                            {  action_cancelled = 'disabled'}
+                            %>
+                            <div class="col-md-5 card-body mx-auto" style="width: 100%;">
+                                <button type="button" id="btn-processed" class="btn btn-info" onclick="changeStatus('<%= order_id %>', 'processed')" <%= action_processed %>>Processed</button>
+                                <button type="button" id="btn-shipped" class="btn btn-primary" onclick="changeStatus('<%= order_id %>', 'shipped')" <%= action_shipped %>>Shipped</button>
+                                <button type="button" id="btn-delivered" class="btn btn-success" onclick="changeStatus('<%= order_id %>', 'delivered')" <%= action_delivered %>>Delivered</button>
+                                <button type="button" id="btn-cancelled" class="btn btn-danger" onclick="changeStatus('<%= order_id %>', 'cancelled')" <%= action_cancelled %>>Cancelled</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END DATA TABLE-->
+
+            <%- include('../partials/footer') %>
+
+            <script>
+                async function changeStatus(order_id, status){
+                    const result = await fetch("/changeOrderStatus", {
+                    method: "post",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+
+                    //make sure to serialize your JSON body
+                    body: JSON.stringify({
+                        status: status,
+                        order_id: order_id
+                    })
+                    })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById("btn-"+status).disabled = true;
+                        alert(data.message);
+                    });
+}
+            </script>
+
+</body>
+
+</html>
+<!-- end document-->
