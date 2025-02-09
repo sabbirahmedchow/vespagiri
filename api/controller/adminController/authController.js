@@ -7,12 +7,17 @@ require("dotenv").config();
 
 module.exports.home = async(req, res) => {
   let userCount = await user.countDocuments();
-  let orderCount = await order.countDocuments();
+  let orderCount = await order.aggregate([
+    { $group: {_id: "$orderId", total: {$sum: 1}}}
+  ]);
   let itemSold = await order.aggregate([
     {$group: {_id: '$userId', total: {$sum: "$product_quantity"}}}
   ]);
+  let totalEarning = await order.aggregate([
+    {$group: {_id: '$userId', total: {$sum: "$subtotal"}}}
+  ]);
   let getOrders = await order.find();
-  res.render("index", {udata: userCount-1, numOrder: orderCount, itemSold: itemSold[0].total, allOrders: getOrders, data: req.cookies});
+  res.render("index", {udata: userCount-1, numOrder: orderCount[0].total, itemSold: itemSold[0].total, totalEarning: totalEarning[0].total, allOrders: getOrders, data: req.cookies});
  
 };
 
@@ -22,9 +27,14 @@ module.exports.dashboard = async (req, res) => {
     userRes = await user.findOne({ username: req.body.username, role: "admin" })
     
     let userCount = await user.countDocuments();
-    let orderCount = await order.countDocuments();
+    let orderCount = await order.aggregate([
+      { $group: {_id: "$orderId", total: {$sum: 1}}}
+    ]);
     let itemSold = await order.aggregate([
       {$group: {_id: '$userId', total: {$sum: "$product_quantity"}}}
+    ]);
+    let totalEarning = await order.aggregate([
+      {$group: {_id: '$userId', total: {$sum: "$subtotal"}}}
     ]);
     let getOrders = await order.find();
 
@@ -55,7 +65,7 @@ module.exports.dashboard = async (req, res) => {
               httpOnly: true,
               secure: process.env.NODE_ENV === "production",
             })
-          .render("index", {udata: userCount-1, numOrder: orderCount, itemSold: itemSold[0].total, allOrders: getOrders, data: info});
+          .render("index", {udata: userCount-1, numOrder: orderCount[0].total, itemSold: itemSold[0].total, totalEarning: totalEarning[0].total, allOrders: getOrders, data: info});
           
         }
         else{

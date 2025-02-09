@@ -1,5 +1,6 @@
 <template>
-    <form action="#" @submit.prevent method="post">
+    <div class="loader" v-if="isVisible"></div>
+    <form action="#" @submit.prevent="sendOrderFormData" method="post">
     <div class="row">
         <div class="col-lg-6 col-md-12 col-12">
             
@@ -259,7 +260,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     
-                                    <h5 class="panel-title"><input type="radio" class="collapsed" aria-expanded="false" data-parent="#faq" data-toggle="collapse" data-target="#payment-3" name="payment_mode" v-model="paymentMode.payment_mode" value="cod"> Cash on Delivery</h5>
+                                    <h5 class="panel-title"><input type="radio" class="collapsed" aria-expanded="false" data-parent="#faq" data-toggle="collapse" data-target="#payment-3" name="payment_mode" v-model="paymentMode.payment_mode" value="COD"> Cash on Delivery</h5>
                                 </div>
                                 <div id="payment-3" class="panel-collapse collapse">
                                     <div class="panel-body">
@@ -269,7 +270,7 @@
                             </div>
                         </div>
                         <div class="order-button-payment">
-                            <input type="submit" value="Place order" @click="sendOrderFormData()" />
+                            <input type="submit" value="Place order"  />
                         </div>								
                     </div>
                 </div>
@@ -286,6 +287,7 @@ import axios from "axios";
 
 let user_name = ref('');
 let address = ref('');
+let isVisible = ref(false);
 
 const cartObj = cartStore();
 
@@ -320,14 +322,17 @@ let shipping = {
     szip: "",
 };
 
-let cart_info = sessionStorage.getItem('cart');
+
+//console.log(cart_info);
 
 let paymentMode = {
-    payment_mode: "bKash"
+    payment_mode: "bkash"
 };
 
 const sendOrderFormData = async() =>{
-    return await axios.get('/api/submitOrder', {
+    let cart_info = sessionStorage.getItem('cart');
+    console.log(cart_info);
+    return await axios.post('/api/submitOrder', {
     params: {
         billing: billing,
         shipping: shipping,
@@ -335,10 +340,29 @@ const sendOrderFormData = async() =>{
         cart_info: cart_info
     }
     })
-        .then((res) => {
-            err_message.value = ''; 
+        .then(async (res) => {
+            if(res.data.message == "Success"){
+                return await axios.post('/api/sendInvoiceToEmail', {
+                params: {
+                    billing: billing,
+                    shipping: shipping,
+                    paymentMode: paymentMode,
+                    cart_info: cart_info
+                }
+                })
+                .then((res) => {
+                alert("Order placed successfully!");
+                sessionStorage.clear();
+                window.location.href = "/thankyou?order_id=" + res.data.order_id;
+                })
+            }
+            else{
+                alert("Order failed! Please try again.");
+            }
+            console.log(res.data); 
         })
-        .catch((err) => err_message.value = err.response.data.message)
+        .catch((err) => console.log(err) )
+   
 }
 
 

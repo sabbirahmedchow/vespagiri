@@ -7,6 +7,7 @@ var orderSchema = new Schema({
   product_name: String,
   product_price: Number,
   product_quantity: Number,
+  product_image: String,
   subtotal: Number,
   order_date: String,
   order_status: {
