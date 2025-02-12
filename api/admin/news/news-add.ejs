@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/header') %>
+<body class="animsition">
+    <div class="page-wrapper">
+        
+    <%- include('../partials/nav') %> 
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
+            <br/>
+
+            <!-- Misc-->
+            <section class="welcome p-t-10">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="title-4">News</h1>
+                            
+                            <hr class="line-seprate">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Misc end-->
+            
+            
+
+           
+            <!-- DATA TABLE-->
+            <section class="p-t-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-data__tool"> 
+                                <div class="table-data__tool-left"></div> 
+                                <div class="table-data__tool-right">
+                                    <a href="/news-list"><button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        news list</button></a>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <form hx-post="/submitNews" hx-on::after-request="this.reset()"  hx-target="#confrim" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                    <div class="card-header">
+                                        <strong>Add News</strong>
+                                        
+                                    </div>
+                                    <div id="confrim"></div>
+                                    <div class="card-body card-block">
+                                        <div class="form-group">
+                                            <label for="name" class=" form-control-label"><strong>Title</strong></label>
+                                            <input type="text" id="title" name="title" placeholder="Enter news title" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description" class=" form-control-label"><strong>Description</strong></label>
+                                            <textarea name="description" id="description" rows="9" placeholder="Enter news description" class="form-control" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bigimage" class=" form-control-label"><strong>Image(970 x 600)</strong></label>
+                                            <input type="file" id="bigimage" name="bigimage" class="form-control-file" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="smallimage" class=" form-control-label"><strong>Image(370 x 240) </strong></label>
+                                            <input type="file" id="smallimage" name="smallimage" class="form-control-file" required>
+                                        </div>  
+                                        
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" onclick="topFunction()" class="btn btn-success btn-sm">
+                                            Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-danger btn-sm">
+                                            <i class="fa fa-ban"></i> Reset
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>   
+                              
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END DATA TABLE-->
+
+            <%- include('../partials/footer') %>
+
+<script>
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+</script>            
+</body>
+
+</html>
+<!-- end document-->

@@ -83,3 +83,23 @@
        
     </div>
 </template>
+<script setup>
+import axios from "axios";
+import { onMounted, ref} from "vue";
+
+const latest_news = ref([]);
+
+const getAllNews = async () => {
+    return await axios.get("/api/getAllNews")
+        .then((response) => {
+            latest_news.value = response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
+
+onMounted(() => {
+    getAllNews()
+});
+</script>

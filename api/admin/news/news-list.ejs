@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/header') %>
+<body class="animsition">
+    <div class="page-wrapper">
+        
+    <%- include('../partials/nav') %> 
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
+            <br/>
+
+            <!-- Misc-->
+            <section class="welcome p-t-10">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="title-4">News</h1>
+                            
+                            <hr class="line-seprate">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Misc end-->
+            
+            
+
+           
+            <!-- DATA TABLE-->
+            <section class="p-t-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-data__tool"> 
+                                <div class="table-data__tool-left"></div> 
+                                <div class="table-data__tool-right">
+                                    <a href="/news"><button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                                        <i class="zmdi zmdi-plus"></i>add news</button></a>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="top-campaign">
+                                <h3 class="title-3 m-b-30">news list</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-top-campaign">
+                                        <tbody hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s">
+                                            
+                                            <% for (var i = 0; i < newsRes.length; i++) {%>
+                                                  <% news_id = newsRes[i]._id %>
+                                             <tr>
+                                                <td> <%= newsRes[i].title %></td>
+                                                <td>
+                                                    <a href="/edit-news/<%= news_id %>"><button class="btn btn-danger">Edit</button></a>
+                                                    <button class="btn btn-danger" hx-delete="/delete-news/<%= news_id %>">Delete</button>
+                                                </td>
+                                                
+                                            </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END DATA TABLE-->
+
+            <%- include('../partials/footer') %>
+
+</body>
+
+</html>
+<!-- end document-->

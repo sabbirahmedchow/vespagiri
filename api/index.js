@@ -24,6 +24,7 @@ const adminBrandRoute = require("./routes/adminRoute/brandRoute");
 const adminCouponRoute = require("./routes/adminRoute/couponRoute");
 const adminProductRoute = require("./routes/adminRoute/productRoute");
 const adminOrderRoute = require("./routes/adminRoute/orderRoute");
+const adminNewsRoute = require("./routes/adminRoute/newsRoute");
 const userListRoute = require("./routes/adminRoute/adminRoute");
 const adminAuthRoute = require("./routes/adminRoute/authRoute");
 
@@ -56,7 +57,6 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 app.use(cors(corsOptions));
-app.use(upload.array()); 
 app.use(express.static(__dirname + '/admin/public'));
 app.use(express.json({ extended: true }));
 app.use(parser.urlencoded({ extended: true }))
@@ -79,6 +79,7 @@ app.use(adminBrandRoute);
 app.use(adminCouponRoute);
 app.use(adminProductRoute);
 app.use(adminOrderRoute);
+app.use(adminNewsRoute);
 app.use(userListRoute);
 app.use(adminAuthRoute);
 
