@@ -31,11 +31,13 @@ module.exports.editNewsForm = async(req, res) => {
 
 module.exports.submitNews = async(req, res) => {
     try{
+       const news_url = req.body.title.replace(/\s+/g, "-");
        const newNews = new news({
             title: req.body.title,
             description: req.body.description,
             bigimage: req.files.bigimage[0].filename,
             smallimage: req.files.smallimage[0].filename,
+            news_url: news_url.toLowerCase()
             });
         await newNews.save(); 
 

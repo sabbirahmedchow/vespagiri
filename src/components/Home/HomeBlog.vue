@@ -9,75 +9,28 @@
                 </div>
             </div>
             <div class="row mt-60">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6" v-for="news in latest_news.slice(0,3)">
                     <div class="single_blog_post mb-40">
                         <div class="post_thumbnail">
-                            <a href="blog-details.html"><img src="/img/blog/1.jpg" alt=""></a>
+                            <a :href="'/news-detail/'+ news.news_url"><img :src="'/img/blog/'+ news.smallimage" :alt="news.title"></a>
                         </div>
                         <div class="post_content_meta">
                             <div class="post_meta">
                                 <ul>            
-                                    <li>Posted March 20.</li>
-                                    <li>400+ View </li>
-                                    <li><a href="#"> 20+ Like</a></li>
+                                    <li>Posted {{new Date(news.newsdate).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}}</li>
                                 </ul>
                             </div>
                             <div class="blog_post_desc">
-                                <h2><a href="blog-details.html">Froome racing to spoil Yates’s pink Giro dream</a></h2>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry... </p>
+                                <h2><a :href="'/news-detail/'+ news.news_url">{{news.title}}</a></h2>
+                                <p>{{excerpt(news.description, 100)}}...</p>
                             </div>
                             <div class="read_more_btn">
-                                <a href="blog-details.html">Read More <span><i class="zmdi zmdi-arrow-right"></i></span></a>
+                                <a :href="'/news-detail/'+ news.news_url">Read More <span><i class="zmdi zmdi-arrow-right"></i></span></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_blog_post mb-40">
-                        <div class="post_thumbnail">
-                            <a href="blog-details.html"><img src="/img/blog/2.jpg" alt=""></a>
-                        </div>
-                        <div class="post_content_meta">
-                            <div class="post_meta">
-                                <ul>            
-                                    <li>Posted March 20.</li>
-                                    <li>400+ View </li>
-                                    <li><a href="#"> 20+ Like</a></li>
-                                </ul>
-                            </div>
-                            <div class="blog_post_desc">
-                                <h2><a href="blog-details.html">Sed ut perspiciatis unde omnis iste natus sit</a></h2>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry... </p>
-                            </div>
-                            <div class="read_more_btn">
-                                <a href="blog-details.html">Read More <span><i class="zmdi zmdi-arrow-right"></i></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single_blog_post mb-40">
-                        <div class="post_thumbnail">
-                            <a href="blog-details.html"><img src="/img/blog/3.jpg" alt=""></a>
-                        </div>
-                        <div class="post_content_meta">
-                            <div class="post_meta">
-                                <ul>            
-                                    <li>Posted March 20.</li>
-                                    <li>400+ View </li>
-                                    <li><a href="#"> 20+ Like</a></li>
-                                </ul>
-                            </div>
-                            <div class="blog_post_desc">
-                                <h2><a href="blog-details.html">Quis autem vel eum tempore voluptate</a></h2>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry... </p>
-                            </div>
-                            <div class="read_more_btn">
-                                <a href="blog-details.html">Read More <span><i class="zmdi zmdi-arrow-right"></i></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
        
@@ -92,12 +45,17 @@ const latest_news = ref([]);
 const getAllNews = async () => {
     return await axios.get("/api/getAllNews")
         .then((response) => {
+            console.log(response.data);
             latest_news.value = response.data;
         })
         .catch((error) => {
             console.log(error);
         });
 };
+
+const excerpt = (value, length) => {
+  return value.length > length ? value.substring(0, length) : value
+}
 
 onMounted(() => {
     getAllNews()

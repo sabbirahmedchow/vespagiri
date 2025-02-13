@@ -19,6 +19,9 @@ var newsSchema = new Schema({
   smallimage: {
     type: String
   },
+  news_url: {
+    type: String
+  }
 });
 
 var News = mongoose.model("news", newsSchema);

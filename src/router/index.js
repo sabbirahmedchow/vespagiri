@@ -74,9 +74,10 @@ const routes = [
   },
 
   {
-    path: '/news-detail',
+    path: '/news-detail/:title',
     name: 'News Detail',
-    component: NewsDetail
+    component: NewsDetail,
+    props: true
   },
 
   {
