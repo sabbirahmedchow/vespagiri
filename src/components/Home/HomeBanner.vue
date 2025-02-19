@@ -10,7 +10,7 @@
                                 <h1>{{r.title}}</h1>
                                 <h2>{{r.subtitle}}</h2>
                                 <p>{{r.text}} </p>
-                                <a href="#">{{r.link}}</a>									
+                                <router-link to="/shop" onclick="pageReload()">{{r.link}}</router-link>									
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">

@@ -6,7 +6,7 @@
                 <div class="col-12">
                     <div class="breadcrumb_inner">
                         <ul>
-                            <li><a href="#">Home</a></li>
+                            <li><router-link to="/" onclick="pageReload()">Home</router-link></li>
                             <li><i class="zmdi zmdi-chevron-right"></i></li>
                             <li>{{ title }}</li>
                             <li v-if="name"><i class="zmdi zmdi-chevron-right"></i></li>

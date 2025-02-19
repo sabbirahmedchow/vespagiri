@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="single_banner">
-                            <a href="#"><img src="/img/banner/2.png" alt=""></a>
+                            <router-link to="/shop" onclick="pageReload()"><img src="/img/banner/2.png" alt=""></router-link>
                         </div>
                     </div>
                     <div class="col-lg-6">

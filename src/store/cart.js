@@ -12,7 +12,7 @@ export const cartStore = defineStore('cart', {
     },
 
     actions: {
-        checkProductExists(id) { 
+        checkProductExistsOnCart(id) { 
             if(this.cart.length > 0){
                 let getProduct = this.cart.find(({product_id}) => product_id === id);
                 if(getProduct){

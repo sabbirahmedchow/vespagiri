@@ -8,12 +8,17 @@ var productSchema = new Schema({
   },
   price: Number,
   description: String,
+  quantity: {
+    type:Number,
+    default: 0
+  },
   image_big: String,
   image_medium: String,
   image_small: String,
   is_sale: Boolean,
   is_featured: Boolean,
-  sale_percentage: Number
+  sale_percentage: Number,
+  url_title: String
   
 });
 

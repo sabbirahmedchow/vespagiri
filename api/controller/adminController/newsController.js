@@ -50,6 +50,7 @@ module.exports.submitNews = async(req, res) => {
 module.exports.updateNews = async(req, res) => {
     let updateNews= '';
     try{
+    const news_url = req.body.title.replace(/\s+/g, "-");
     if(req.file) 
     { 
         updateNews = {
@@ -57,7 +58,7 @@ module.exports.updateNews = async(req, res) => {
             description: req.body.description,
             bigmage: req.files.bigimage[0].filename,
             smallimage: req.files.smallimage[0].filename,
-            
+            news_url: news_url.toLowerCase()
         };
     }
     else{
@@ -66,7 +67,7 @@ module.exports.updateNews = async(req, res) => {
             description: req.body.description,
             bigimage: req.body.bigimage_old,
             smallimage: req.body.smallimage_old,
-            
+            news_url: news_url.toLowerCase()
         };
     }
         const filter = { _id: req.body.news_id }

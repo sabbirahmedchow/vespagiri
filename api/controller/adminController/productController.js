@@ -38,17 +38,19 @@ module.exports.editProductForm = async(req, res) => {
 
 module.exports.submitProduct = async(req, res) => {
     try{
+       const product_url = req.body.name.replace(/\s+/g, "-"); 
        const newProduct = new product({
             name: req.body.name,
             price: req.body.price,
             description: req.body.description,
+            quantity: req.body.quantity,
             image_big: req.files.bigimage[0].filename,
             image_medium: req.files.medimage[0].filename,
             image_small: req.files.smallimage[0].filename,
             is_sale: req.body.is_sale,
             is_featured: req.body.is_featured,
-            sale_percentage: req.body.sale_percentage
-            
+            sale_percentage: req.body.sale_percentage,
+            url_title: product_url.toLowerCase()
         });
         await newProduct.save(); 
 
@@ -77,19 +79,21 @@ module.exports.submitProduct = async(req, res) => {
 module.exports.updateProduct = async(req, res) => {
     let updateProduct= '';
     try{
+    const product_url = req.body.name.replace(/\s+/g, "-");
     if(req.file) 
     { 
         updateProduct = {
             name: req.body.name,
             price: req.body.price,
             description: req.body.description,
+            quantity: req.body.quantity,
             image_big: req.files.bigimage[0].filename,
             image_medium: req.files.medimage[0].filename,
             image_small: req.files.smallimage[0].filename,
             is_sale: req.body.is_sale,
             is_featured: req.body.is_featured,
-            sale_percentage: req.body.sale_percentage
-            
+            sale_percentage: req.body.sale_percentage,
+            url_title: product_url.toLowerCase()
         };
     }
     else{
@@ -97,13 +101,14 @@ module.exports.updateProduct = async(req, res) => {
             name: req.body.name,
             price: req.body.price,
             description: req.body.description,
+            quantity: req.body.quantity,
             image_big: req.body.bigimage_old,
             image_medium: req.body.medimage_old,
             image_small: req.body.smallimage_old,
             is_sale: req.body.is_sale,
             is_featured: req.body.is_featured,
-            sale_percentage: req.body.sale_percentage
-            
+            sale_percentage: req.body.sale_percentage,
+            url_title: product_url.toLowerCase()
         };
     }
         const filter = { _id: req.body.product_id }

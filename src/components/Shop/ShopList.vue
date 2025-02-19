@@ -17,16 +17,16 @@
                                 <div class="single__product">
                                     <span class="pro_badge" v-if="product.is_sale">Sale</span>
                                     <div class="produc_thumb">
-                                        <a href="#"><img :src="'/img/product/product_medium/' + product.image_medium" :alt="product.name"></a>
+                                        <a :href="'product-detail/'+  product.url_title"><img :src="'/img/product/product_medium/' + product.image_medium" :alt="product.name"></a>
                                     </div>
                                     <div class="product_hover">
                                         <div class="product_action">
                                             <a href="#" title="Add To Cart" @click="addToCart(product)"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                            <a href="#" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                            <a href="#" @click.prevent="add_to_wishlist(product._id)" v-if="show_wishlist_icon" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
                                             
                                         </div>
                                         <div class="product__desc">
-                                            <h3><a :href="'product-detail/'+  product.name" >{{product.name}}</a></h3>
+                                            <h3><a :href="'product-detail/'+  product.url_title" >{{product.name}}</a></h3>
                                             <div class="price_amount">
                                                 <span class="current_price">&#2547; {{parseFloat(product.price).toFixed(2)}} </span>&nbsp;
                                                 <span class="discount_price" v-if="product.sale_percentage != null">-{{product.sale_percentage}}%</span>
@@ -126,6 +126,7 @@ let brand_name;
 const perPage = ref(6);
 const currentPage = ref(1);
 const products = ref([]);
+let show_wishlist_icon = ref(false); 
 
 e.on('category-id', (evt) => {
     let cat_id = evt.category_id;
@@ -228,6 +229,10 @@ const ShowProducts = computed(() => {
 }
 
 onMounted(() => {
+    if (document.cookie.indexOf('user_fullname') > -1  ) {
+        
+        show_wishlist_icon.value = true;
+    }
     getProducts();
     
 });

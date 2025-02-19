@@ -17,7 +17,7 @@
                                 <div class="col-lg-4 col-md-6" v-for="product in featured_products">
                                     <div class="single__product">
                                         <div class="produc_thumb">
-                                            <a href="product-details.html">
+                                            <a :href="'product-detail/'+  product.url_title">
                                                 <img :src="'/img/product/product_medium/' + product.image_medium" :alt="product.name">
                                             </a>
                                         </div>
@@ -27,7 +27,7 @@
                                                 <a href="#" @click.prevent="add_to_wishlist(product._id)" title="Wishlist" v-if="show_wishlist_icon"><i class="zmdi zmdi-favorite-outline"></i></a>
                                             </div>
                                             <div class="product__desc">
-                                                <h3><a :href="'product-detail/'+  product.name" >{{product.name}}</a></h3>
+                                                <h3><a :href="'product-detail/'+  product.url_title" >{{product.name}}</a></h3>
                                                 <div class="price_amount">
                                                     <span class="current_price">&#2547; {{parseFloat(product.price).toFixed(2)}} </span>&nbsp;
                                                 <span class="discount_price" v-if="product.sale_percentage != null">-{{product.sale_percentage}}%</span>
@@ -83,8 +83,12 @@ const getFeaturedProducts = async () => {
 };
 
 const addToCart = (product) =>{
-
-   if(cartObj.checkProductExists(product._id))
+   if(product.quantity == 0){
+    alert("This product is out of stock for now.");
+    return false;
+   }
+   
+   if(cartObj.checkProductExistsOnCart(product._id))
    {
     let cartProduct = {
         product_id : product._id,

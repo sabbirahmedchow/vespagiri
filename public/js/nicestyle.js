@@ -93,29 +93,7 @@ $(function() {
         }
     });
     
-    /* --Related Product Carousel--*/
-    $('.related_product_guttters').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 5000,
-        items: 4,
-        responsive:{
-            0:{
-                items:1,
-            }, 
-            768:{
-                items:2,
-            },
-            992:{
-                items:3,
-            },
-            1199:{
-                items:4,
-            }
-        }
-    });
+    
    
     /* --Testimonial Carousel--*/
     $('.testimonial_list').owlCarousel({
@@ -249,7 +227,7 @@ $(function() {
         $('#ship-box-info').slideToggle(1000);
     });
     /*mini cart slideToggle*/
-    $(".mini_cart_box_wrapper > a, .cart_btn").on("click", function() {
+    $(".mini_cart_box_wrapper > a, .cart_btn, .closeMiniCart").on("click", function() {
         $('.mini_cart_box').toggleClass('active');
     }); 
     

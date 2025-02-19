@@ -13,7 +13,7 @@ import { useRoute } from 'vue-router';
 import {ref} from 'vue';
 const router = useRoute();
 let product_title = ref('');
-product_title.value = router.params.name;
+product_title.value = router.params.name.replace(/-/g, " ");
 import ShopHead from "@/components/Shop/ShopHead.vue"
 import ShopProdDetail from "@/components/Shop/ShopProdDetail.vue"
 </script>

@@ -2,56 +2,6 @@ const { product, productCategory, productBrand } = require("../model/adminModels
 const category = require("../model/adminModels/categoryModel");
 const brand = require("../model/adminModels/brandModel");
 
-module.exports.addNewProductForm = async(req, res) => {
-    try{
-        categoryRes = await category.find();
-        brandRes = await brand.find();
-        res.render('product/product-add', {categoryRes, brandRes, data: req.cookies});
-    }catch(err){
-        res.render('product/product-add', {error: err.message, data: req.cookies});
-    }
-    
-};
-
-module.exports.submitProduct = async(req, res) => {
-    try{
-       const newProduct = new product({
-            name: req.body.name,
-            price: req.body.price,
-            description: req.body.description,
-            image_big: req.files.bigimage[0].filename,
-            image_medium: req.files.medimage[0].filename,
-            image_small: req.files.smallimage[0].filename,
-            is_sale: req.body.is_sale,
-            is_featured: req.body.is_featured,
-            sale_percentage: req.body.sale_percentage
-            
-        });
-        await newProduct.save(); 
-
-        if(req.body.category != ''){
-        const newProdCat = new productCategory({
-            product_id: newProduct._id,
-            category_id: req.body.category
-        });
-        await newProdCat.save();
-        }
-
-        if(req.body.brand != ''){
-        const newProdBrand = new productBrand({
-            product_id: newProduct._id,
-            brand_id: req.body.brand
-        });
-        await newProdBrand.save();
-        }
-
-        res.send("<p style='text-align:center; font-weight:bold;'>Product added successfully.</p>")
-    }catch(err){
-        res.send("<p style='text-align:center; font-weight:bold; padding:5px; color: red;'>An error occurred while saving. " + err.message + "</p>");      
-    }
-};
-
-
 module.exports.getAllProducts = async(req, res) => {
     try{
         productRes = await product.find().sort({_id: -1});
@@ -120,8 +70,8 @@ module.exports.getFeaturedProducts = async(req, res) => {
 
 module.exports.getProductDetail = async(req, res) => {
     try{
-        var name = req.query.product_name
-        productDetail = await product.find({name});
+        var url_title = req.query.product_name
+        productDetail = await product.find({url_title});
         res.send(productDetail);
     }catch(err){
         res.send({error: err.message});
@@ -193,9 +143,11 @@ module.exports.getRelatedProduct = async(req, res) => {
             {
                 $project: {
                     _id: 0,
+                    "productId": "$product._id",
                     "productName": "$product.name",
                     "productImage": "$product.image_medium",
                     "productPrice": "$product.price",
+                    "productUrl" : "$product.url_title",
                     "productSalePercentage": "$product.sale_percentage",
                 }
             }

@@ -37,6 +37,7 @@
                                 <span class="cart_count">{{cartObj.cartTotalQuantity()}}</span>
                             </a>
                             <ul class="mini_cart_box">
+                                <li> <a href="#" class="closeMiniCart">X</a></li>
                                 <li class="single_product_cart" v-if="cartObj.cart.length > 0" v-for="cartProduct in cartObj.cart">
                                     <div class="cart_img">
                                         <a href="product-details.html"><img :src="'/img/product/product_small/' + cartProduct.product_image" :alt=cartProduct.product_name></a>

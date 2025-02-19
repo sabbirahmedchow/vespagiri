@@ -6,9 +6,9 @@
                     <div class="menu d-none d-lg-block ">
                         <nav>
                             <ul>                                                  
-                                <li><router-link to="/" onclick="test()">HOME</router-link></li>
+                                <li><router-link to="/" onclick="pageReload()">HOME</router-link></li>
                                 <li><router-link to="/about">About</router-link></li>
-                                <li><router-link to="/shop" onclick="test()">Shop</router-link></li>
+                                <li><router-link to="/shop" onclick="pageReload()">Shop</router-link></li>
                                 <li><router-link to="/news">News</router-link></li>
                                 <li><router-link to="/contact">CONTACT </router-link></li>
                                 <li class="mega_item" v-if="isCookieSet"><router-link to="/my-account">My Account</router-link></li>
@@ -34,12 +34,12 @@
                         <div class="mobile-menu clearfix">
                             <nav>
                                 <ul>                                                  
-                                    <li><a href="index.html">HOME </a></li>
-                                    <li><a href="about-us.html">About</a></li>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="contact-us.html">CONTACT </a></li>
-                                    <li ><a href="#">My Account</a></li>
+                                    <li><router-link to="/" onclick="pageReload()">HOME </router-link></li>
+                                    <li><router-link to="/about">About</router-link></li>
+                                    <li><router-link to="/shop" onclick="pageReload()">Shop</router-link></li>
+                                    <li><router-link to="/news">News</router-link></li>
+                                    <li><router-link to="/contact">CONTACT </router-link></li>
+                                    <li class="mega_item" v-if="isCookieSet"><router-link to="/my-account">My Account</router-link></li>
                                 </ul>
                             </nav>
                         </div>
