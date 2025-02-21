@@ -58,7 +58,7 @@
     const brand_list = ref([]);
    
     const getCategories = async () => {
-        return await axios.get('/api/getAllCategories')
+        return await axios.get('/api/getCategoriesWithProducts')
         .then((res1) => categories_list.value = res1.data)
         .catch((err) => console.log(err));
     };

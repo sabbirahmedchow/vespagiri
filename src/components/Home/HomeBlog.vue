@@ -45,7 +45,6 @@ const latest_news = ref([]);
 const getAllNews = async () => {
     return await axios.get("/api/getAllNews")
         .then((response) => {
-            console.log(response.data);
             latest_news.value = response.data;
         })
         .catch((error) => {

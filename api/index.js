@@ -17,6 +17,7 @@ const brandRoute = require("./routes/brandRoute");
 const couponRoute = require("./routes/couponRoute");
 const orderRoute = require("./routes/orderRoute");
 const newsRoute = require("./routes/newsRoute");
+const notifyRoute = require("./routes/notificationRoute");
 const wishlistRoute = require("./routes/wishlistRoute");
 
 //declare admin routes
@@ -73,6 +74,7 @@ app.use(brandRoute);
 app.use(couponRoute);
 app.use(orderRoute);
 app.use(newsRoute);
+app.use(notifyRoute);
 app.use(wishlistRoute);
 
 //admin routes

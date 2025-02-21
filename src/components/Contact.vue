@@ -71,24 +71,27 @@
                         <div class="contact-form-titile text-center">
                             <h3>Send Us a Message</h3>    
                         </div>
+                        <span style='text-align:center; color: red; padding:0; margin: 0 auto;' v-if="loader"><img src='../../images/preloader.gif' width='50' alt='loading...'></span>
+                        <p style='text-align:center; font-weight:bold; color: red;'>
+                            {{ confirm_message }}</p>
                        <div class="contat_form_inner mt-60">
-                            <form id="contact-form" action="https://preview.hasthemes.com/exporso-preview/exporso/assets/mail.php" method="POST">
+                            <form id="contactForm" action="#" @submit.prevent="sendContactMail()" method="post">
                                 <div class="single-contact-form d-flex">
                                     <div class="contact-box">
-                                        <input type="text" placeholder="Your Name *" name="name">
+                                        <input type="text" placeholder="Your Name *" name="name" v-model="contactFormData.name" required>
                                     </div>
                                     <div class="contact-box">
-                                        <input type="text" placeholder="Phone *" name="phone">
+                                        <input type="text" placeholder="Phone" v-model="contactFormData.phone" name="phone">
                                     </div>
                                 </div>
                                 <div class="single-contact-form">
                                     <div class="contact-box subject">
-                                        <input type="email" placeholder="Email*" name="email">
+                                        <input type="email" placeholder="Email*" v-model="contactFormData.sender" name="sender" required>
                                     </div>
                                 </div>
                                 <div class="single-contact-form">
                                     <div class="contact-box message">
-                                        <textarea name="message" placeholder="Message*"></textarea>
+                                        <textarea name="message" placeholder="Message*" v-model="contactFormData.message" required></textarea>
                                     </div>
                                 </div>
                                 <div class="contact-btn">
@@ -107,3 +110,31 @@
     </div>
        <!--Contact us end-->
 </template>
+
+<script setup>
+
+import axios from "axios";
+import {ref} from "vue";
+
+let contactFormData = {
+    name: "",
+    phone: "",
+    sender: "",
+    message: ""
+};
+let confirm_message = ref("");
+let loader = ref(false);
+
+const sendContactMail = async () => {
+loader.value = true;
+return await axios.post('/api/send-contact-mail', contactFormData)
+.then((res) => {
+    loader.value = false;
+    confirm_message.value = res.data.message;
+    document.forms["contactForm"].reset();
+})
+.catch((err) => console.log(err));
+
+};
+
+</script>

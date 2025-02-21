@@ -4,6 +4,7 @@ const categoryController = require("../controller/categoryController");
 
 const route = Router();
 
+route.get("/getCategoriesWithProducts", categoryController.getCategoriesWithProducts);
 route.get("/getAllCategories", categoryController.getAllCategories);
 route.post("/submitCategory",  categoryController.submitCategory);
 route.get("/edit-category/:catId", categoryController.editCategoryForm);

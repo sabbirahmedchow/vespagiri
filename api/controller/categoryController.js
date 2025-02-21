@@ -1,7 +1,7 @@
 const category = require("../model/adminModels/categoryModel");
 const { productCategory } = require("../model/adminModels/productModel");
 
-module.exports.getAllCategories = async(req, res) => {
+module.exports.getCategoriesWithProducts = async(req, res) => {
     try{
         let numOfProductsInCategory;
         let numProdCat= {};
@@ -14,6 +14,16 @@ module.exports.getAllCategories = async(req, res) => {
             categoryRes[i] = {...categoryRes[i], ...numProdCat} 
         }
         
+        res.send(categoryRes);
+    }catch(err){
+        res.send({error: err.message});
+    }
+};
+
+module.exports.getAllCategories = async(req, res) => {
+    try{
+        categoryRes = await category.find();
+        console.log(categoryRes);
         res.send(categoryRes);
     }catch(err){
         res.send({error: err.message});

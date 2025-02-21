@@ -4,7 +4,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3">
                         <div class="logo">
-                            <router-link to="/" onclick="test()"><img src="/img/logo/vespa-logo.png" alt="Vespagiri" height="100"></router-link>
+                            <router-link to="/" onclick="pageReload()"><img src="/img/logo/vespa-logo.png" alt="Vespagiri" height="100"></router-link>
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-8">
@@ -14,10 +14,8 @@
                                     <div class="select">
                                         <select name="categroy_search">
                                             <option value="1" selected>All Categories</option>
-                                            <option value="2" >Latest Bikes</option>
-                                            <option value="3" >Upcoming Bike</option>
-                                            <option value="4" >popular Bike</option>
-                                            <option value="5" >Best Selling Bike</option>
+                                            <option  v-for="cat in cat_list">{{cat.name}}</option>
+                                            
                                         </select>
                                     </div>
                                     <div class="search">
@@ -80,17 +78,29 @@
 <script setup>
 import { cartStore } from '@/store/cart.js'
 import {ref, onMounted} from 'vue'
+import axios from "axios";
 
 const cartObj = cartStore();
 let link = ref('');
 
+let cat_list = ref([]);
+
+const getCategories = async () => {
+        return await axios.get('/api/getAllCategories')
+        .then((res1) => 
+        { cat_list.value = res1.data; console.log(res1.data); })
+        .catch((err) => console.log(err));
+    };
+
 onMounted(() => {
+    getCategories();
     if (document.cookie.indexOf('user_fullname') > -1  ) {
         link.value='/checkout';
 }
 else{
     link.value='/login?page=checkout';
 }
+
 })
 
 </script>
