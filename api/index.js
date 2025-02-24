@@ -19,6 +19,7 @@ const orderRoute = require("./routes/orderRoute");
 const newsRoute = require("./routes/newsRoute");
 const notifyRoute = require("./routes/notificationRoute");
 const wishlistRoute = require("./routes/wishlistRoute");
+const searchRoute = require("./routes/searchRoute");
 
 //declare admin routes
 const adminCatRoute = require("./routes/adminRoute/categoryRoute");
@@ -76,6 +77,7 @@ app.use(orderRoute);
 app.use(newsRoute);
 app.use(notifyRoute);
 app.use(wishlistRoute);
+app.use(searchRoute);
 
 //admin routes
 app.use(adminCatRoute);

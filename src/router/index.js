@@ -13,6 +13,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Account from '../views/Account.vue'
 import Thankyou from '../views/Thankyou.vue'
+import Search from '../views/Search.vue'
 
 const ifAuthenticated = (to, from, next) => {
   //const { $cookies } = router.app.config.globalProperties;
@@ -84,6 +85,13 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact
+  },
+
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search,
+    props: true
   },
 
   {

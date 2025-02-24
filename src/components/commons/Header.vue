@@ -9,17 +9,11 @@
                     </div>
                     <div class="col-lg-7 col-md-8">
                         <div class="category_search">
-                            <form action="#" name="frm">
+                            <form action="/search" name="frm">
                                 <div class="category_search_inner">
-                                    <div class="select">
-                                        <select name="categroy_search">
-                                            <option value="1" selected>All Categories</option>
-                                            <option  v-for="cat in cat_list">{{cat.name}}</option>
-                                            
-                                        </select>
-                                    </div>
+                                    
                                     <div class="search">
-                                        <input type="text" placeholder="Search Keyword Here" name="txt">
+                                        <input type="text" placeholder="Search Keyword Here" name="qry">
                                     </div>
                                     <div class="submit">
                                         <button type="submit" name="btn"><i class="zmdi zmdi-search"></i></button>
@@ -78,23 +72,13 @@
 <script setup>
 import { cartStore } from '@/store/cart.js'
 import {ref, onMounted} from 'vue'
-import axios from "axios";
 
 const cartObj = cartStore();
 let link = ref('');
 
-let cat_list = ref([]);
-
-const getCategories = async () => {
-        return await axios.get('/api/getAllCategories')
-        .then((res1) => 
-        { cat_list.value = res1.data; console.log(res1.data); })
-        .catch((err) => console.log(err));
-    };
-
 onMounted(() => {
-    getCategories();
-    if (document.cookie.indexOf('user_fullname') > -1  ) {
+   
+if (document.cookie.indexOf('user_fullname') > -1  ) {
         link.value='/checkout';
 }
 else{
