@@ -20,6 +20,7 @@ const newsRoute = require("./routes/newsRoute");
 const notifyRoute = require("./routes/notificationRoute");
 const wishlistRoute = require("./routes/wishlistRoute");
 const searchRoute = require("./routes/searchRoute");
+const newsletterRoute = require("./routes/newsletterRoute");
 
 //declare admin routes
 const adminCatRoute = require("./routes/adminRoute/categoryRoute");
@@ -78,6 +79,7 @@ app.use(newsRoute);
 app.use(notifyRoute);
 app.use(wishlistRoute);
 app.use(searchRoute);
+app.use(newsletterRoute);
 
 //admin routes
 app.use(adminCatRoute);

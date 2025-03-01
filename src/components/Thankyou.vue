@@ -198,10 +198,23 @@ const getOrderDetails = async() =>{
             payment_method.value = res.data.orderPaymentDetail[0].paymentMethod;
 
             order_date.value = res.data.orderDetail[0].order_date;
+            sendOrderEmail(res.data.orderBillingAddres[0].billingFirstName, res.data.orderBillingAddres[0].billingEmail);
             //console.log(res.data.orderDetail[1].order_date); 
         })
         .catch((err) => console.log(err) )
    
+}
+
+const sendOrderEmail = async(userName, userEmail) =>{
+    return await axios.post('/api/sendOrderEmail', {
+        orderId: route.query.order_id,
+        userName: userName,
+        userEmail: userEmail
+    })
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => console.log(err) )
 }
 
 onMounted(() => {

@@ -1,9 +1,10 @@
 const {order, orderBilling, orderShipping, orderPayment} = require("../model/orderModel.js");
+const { changeProductQuantityAfterOrder } = require("./productController.js");
 
 module.exports.submitOrder = async(req, res) => {
     //console.log("Request: "+req.body.params.cart_info);
     let obj = JSON.parse(req.body.params.cart_info);
-    console.log(obj);
+    //console.log(obj);
     let order_id = this.generateOrderId();
     let total_cost = parseInt(obj.final_amount);
     try{
@@ -20,6 +21,7 @@ module.exports.submitOrder = async(req, res) => {
                 subtotal: obj.cart[i].product_quantity * obj.cart[i].product_price,
             });
             await newOrderProducts.save(); 
+            changeProductQuantityAfterOrder(obj.cart[i].product_id, obj.cart[i].product_quantity);
         }
 
         const newOrderBilling = new orderBilling({
@@ -106,7 +108,7 @@ module.exports.generateOrderId = (req,res) =>{
 module.exports.getUserOrders = async (req, res) =>{
     //console.log("Request user: "+req.user);
       try{
-      orderDetail = await order.find({userId: req.user});
+      orderDetail = await order.find({userId: req.user}).sort({_id: -1});
       res.send(orderDetail);
       }catch(err){
           res.send({error: err.message});

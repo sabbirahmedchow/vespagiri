@@ -189,7 +189,13 @@ if(btn == true)
     }
     })
     .then((res) => {
-        if(res.data == "Success"){
+        console.log(res.data);
+        
+        if(res.data.checkExists != "" && res.data != "Success"){
+            alert(res.data.checkExists);
+            return false;
+        }
+        else if(res.data == "Success"){
             toast("Product added to wishlist!", {
                 "theme": "auto",
                 "type": "success",
@@ -200,7 +206,6 @@ if(btn == true)
     .catch((err) => console.log(err));
 }
 }
-
 
 onMounted(() => {
     if(related_products.value !== null) {

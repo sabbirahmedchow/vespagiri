@@ -159,6 +159,14 @@ module.exports.getRelatedProduct = async(req, res) => {
     }
 };
 
-
-
+module.exports.changeProductQuantityAfterOrder = async(product_id, product_quantity) => {
+    try{
+        let getProduct = await product.findOne({ _id: product_id });
+        let new_quantity = getProduct.quantity - product_quantity;
+        await product.findByIdAndUpdate(product_id, { quantity: new_quantity });
+    }
+    catch(err){
+        console.log(err);
+    }
+};
 

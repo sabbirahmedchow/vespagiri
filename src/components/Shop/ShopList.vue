@@ -206,7 +206,7 @@ const ShowProducts = computed(() => {
 });
 
  const addToCart = (product) =>{
-   if(cartObj.checkProductExists(product._id))
+   if(cartObj.checkProductExistsOnCart(product._id))
    {
     let cartProduct = {
         product_id : product._id,
@@ -226,6 +226,37 @@ const ShowProducts = computed(() => {
         "dangerouslyHTMLString": true
     })
    }
+};
+
+const add_to_wishlist = async (prod_id) => {
+
+let btn = confirm("Do you want to add this product to your wishlist?");
+if(btn == true)
+{
+    let user_id = document.cookie.split(';').find(row => row.startsWith('user_id')).split('=')[1];
+    return await axios.post('/api/addToWishlist', {
+        params: {
+        product_id: prod_id,
+        user_id: user_id
+    }
+    })
+    .then((res) => {
+        console.log(res.data);
+        
+        if(res.data.checkExists != "" && res.data != "Success"){
+            alert(res.data.checkExists);
+            return false;
+        }
+        else if(res.data == "Success"){
+            toast("Product added to wishlist!", {
+                "theme": "auto",
+                "type": "success",
+                "dangerouslyHTMLString": true
+            })
+        }
+    })
+    .catch((err) => console.log(err));
+}
 }
 
 onMounted(() => {

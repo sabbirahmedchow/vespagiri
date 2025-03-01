@@ -7,8 +7,8 @@
                     <div class="row align-items-center" v-for="r in randomizeBanner">
                         <div class="col-lg-6 col-md-6">
                             <div class="slider-content slider-text-animation">
-                                <h1>{{r.title}}</h1>
-                                <h2>{{r.subtitle}}</h2>
+                                <h2>{{r.title}}</h2>
+                                <h1>{{r.subtitle}}</h1>
                                 <p>{{r.text}} </p>
                                 <router-link to="/shop" onclick="pageReload()">{{r.link}}</router-link>									
                             </div>
@@ -33,23 +33,23 @@ let bannerContent = ref([]);
 
 bannerContent = [
     {
-        title: 'Best Deal1',
-        subtitle: '5% - 8% Off',
-        text: 'Spare Parts Modification. ',
+        title: 'Vespagiri.com',
+        subtitle: 'Offers On',
+        text: 'Spare Parts Purchase.',
         image: "/img/slide/layer_img_3.png",
         link: 'Visit Shop'
     },
     {
-        title: 'Best Deal2',
-        subtitle: '4% - 8% Off',
-        text: 'Engine Overhauling. ',
+        title: 'Vespagiri.com',
+        subtitle: 'Offers On',
+        text: 'Engine Overhauling.',
         image: "/img/slide/vespa-2.png",
         link: 'Visit Shop'
     },
     {
-        title: 'Best Deal3',
-        subtitle: '10% - 12% Off',
-        text: 'Exterior Modification. ',
+        title: 'Vespagiri.com',
+        subtitle: 'Offers On',
+        text: 'Exterior Modification.',
         image: "/img/slide/vespa-3.png",
         link: 'Visit Shop'
     }

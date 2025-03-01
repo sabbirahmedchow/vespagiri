@@ -342,19 +342,19 @@ const sendOrderFormData = async() =>{
     })
         .then(async (res) => {
             if(res.data.message == "Success"){
-                return await axios.post('/api/sendInvoiceToEmail', {
-                params: {
-                    billing: billing,
-                    shipping: shipping,
-                    paymentMode: paymentMode,
-                    cart_info: cart_info
-                }
-                })
-                .then((res) => {
+                // return await axios.post('/api/sendInvoiceToEmail', {
+                // params: {
+                //     billing: billing,
+                //     shipping: shipping,
+                //     paymentMode: paymentMode,
+                //     cart_info: cart_info
+                // }
+                // })
+                // .then((res) => {
                 alert("Order placed successfully!");
                 sessionStorage.clear();
                 window.location.href = "/thankyou?order_id=" + res.data.order_id;
-                })
+                //})
             }
             else{
                 alert("Order failed! Please try again.");

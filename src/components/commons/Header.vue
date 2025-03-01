@@ -13,7 +13,7 @@
                                 <div class="category_search_inner">
                                     
                                     <div class="search">
-                                        <input type="text" placeholder="Search Keyword Here" name="qry">
+                                        <input type="text" placeholder="Search Keyword Here" name="qry" autocomplete="off">
                                     </div>
                                     <div class="submit">
                                         <button type="submit" name="btn"><i class="zmdi zmdi-search"></i></button>
